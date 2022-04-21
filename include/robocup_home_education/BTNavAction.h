@@ -13,15 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BEHAVIOR_TREES_BTACTION_H
-#define BEHAVIOR_TREES_BTACTION_H
+#ifndef ROBOCUP_HOME_EDUCATION_BTACTION_H
+#define ROBOCUP_HOME_EDUCATION_BTACTION_H
 
 #include <ros/ros.h>
 
 #include "actionlib/client/simple_action_client.h"
 #include "move_base_msgs/MoveBaseAction.h"
 
-namespace behavior_trees
+namespace robocup_home_education
 {
 class BTNavAction : public BT::ActionNodeBase
 {
@@ -131,6 +131,6 @@ private:
   bool nav_succeded_;
 };
 
-}  // namespace behavior_trees
+}  // namespace robocup_home_education
 
-#endif  // BEHAVIOR_TREES_BTACTION_H
+#endif  // ROBOCUP_HOME_EDUCATION_BTACTION_H

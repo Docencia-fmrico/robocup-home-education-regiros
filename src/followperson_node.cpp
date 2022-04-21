@@ -36,6 +36,7 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_moving_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
+  blackboard->set("person", "person");
 
   std::string pkgpath = ros::package::getPath("robocup_home_education");
   std::string xml_file = pkgpath + "/behavior_trees/followperson.xml";

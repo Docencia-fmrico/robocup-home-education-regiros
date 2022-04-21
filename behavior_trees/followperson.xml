@@ -5,7 +5,7 @@
         <ReactiveSequence>
             <Action ID="IfPerson" name="IfPerson" person="{person}"/>
             <Control ID="Process" name="Process" person="{person}">
-                <Action ID="Move"/>
+                <Action ID="Move" name="Move" person="{person}"/>
             </Control>
         </ReactiveSequence>
     </BehaviorTree>
@@ -17,9 +17,8 @@
         <Action ID="Move">
             <input_port name="{person}"/>
         </Action>
-        <Control ID="Process">
-            <input_port name="{person}"/>
-            <output_port name="{person}"/>
+        <Control ID="process">
+            <inout_port name="{person}"/>
         </Control>
     </TreeNodesModel>
     <!-- ////////// -->

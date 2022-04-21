@@ -35,10 +35,10 @@
 
 namespace robocup_home_education
 {
-class ifperson : public BT::ActionNodeBase
+class IfPerson : public BT::ActionNodeBase
 {
   public:
-    explicit ifperson(const std::string& name, const BT::NodeConfiguration& config);
+    explicit IfPerson(const std::string& name, const BT::NodeConfiguration& config);
 
     void halt();
 

@@ -14,7 +14,7 @@
 
 #include <string>
 
-#include "robocup_home_education/ifperson.h"
+#include "robocup_home_education/IfPerson.h"
 #include "robocup_home_education/str_followobj.h"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
@@ -24,23 +24,23 @@
 
 namespace robocup_home_education
 {
-  ifperson::ifperson(const std::string& name, const BT::NodeConfiguration & config)
+  IfPerson::IfPerson(const std::string& name, const BT::NodeConfiguration & config)
   : BT::ActionNodeBase(name, config),
     depth_sub_(nh_, "/camera/depth/image_raw", 1),
     bbx_sub_(nh_, "/darknet_ros/bounding_boxes", 1),
     sync_bbx_(MySyncPolicy_bbx(10), depth_sub_, bbx_sub_)
   {
-    sync_bbx_.registerCallback(boost::bind(&ifperson::callback_bbx, this, _1, _2));
+    sync_bbx_.registerCallback(boost::bind(&IfPerson::callback_bbx, this, _1, _2));
   }
 
   void
-  ifperson::halt()
+  IfPerson::halt()
   {
     ROS_INFO("IfPerson halt");
   }
 
   void
-  ifperson::callback_bbx(const sensor_msgs::ImageConstPtr& depth, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
+  IfPerson::callback_bbx(const sensor_msgs::ImageConstPtr& depth, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
   {
     cv_bridge::CvImagePtr img_ptr_depth;
 
@@ -79,7 +79,7 @@ namespace robocup_home_education
   }
 
   BT::NodeStatus
-  ifperson::tick()
+  IfPerson::tick()
   {
     ROS_INFO("IfPerson [%d]", person.detected);
 
@@ -101,5 +101,5 @@ namespace robocup_home_education
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<robocup_home_education::ifperson>("IfPerson");
+  factory.registerNodeType<robocup_home_education::IfPerson>("IfPerson");
 }

@@ -4,13 +4,13 @@ project(robocup_home_education)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
 
-find_package(ZMQ)
-if(ZMQ_FOUND)
-    message(STATUS "ZeroMQ found.")
-    add_definitions(-DZMQ_FOUND)
-else()
-  message(WARNING "ZeroMQ NOT found. Not including PublisherZMQ.")
-endif()
+#find_package(ZMQ)
+#if(ZMQ_FOUND)
+#    message(STATUS "ZeroMQ found.")
+#    add_definitions(-DZMQ_FOUND)
+#else()
+#  message(WARNING "ZeroMQ NOT found. Not including PublisherZMQ.")
+#endif()
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -51,7 +51,7 @@ include_directories(
 
 add_library(robocup_home_education src/robocup_home_education/PIDController.cpp)
 
-add_library(asr_if_person_bt_node SHARED src/robocup_home_education/ifperson.cpp)
+add_library(asr_if_person_bt_node SHARED src/robocup_home_education/IfPerson.cpp)
 target_link_libraries(asr_if_person_bt_node robocup_home_education)
 
 add_library(asr_process_bt_node SHARED src/robocup_home_education/Process.cpp)
@@ -80,6 +80,6 @@ target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${
 roslint_cpp(
  src/followperson_node.cpp
  include/robocup_home_education/PIDController.h src/robocup_home_education/PIDController.cpp
- include/robocup_home_education/ifperson.h src/robocup_home_education/ifperson.cpp
+ include/robocup_home_education/IfPerson.h src/robocup_home_education/IfPerson.cpp
  include/robocup_home_education/Move.h src/robocup_home_education/Move.cpp
 )

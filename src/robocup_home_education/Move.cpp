@@ -35,14 +35,14 @@ Move::Move(
 void
 Move::on_halt()
 {
-  ROS_INFO("Move halt");
+  ROS_INFO("Move halt");  //Se realiza el halt
 }
 
 void
 Move::on_start()
 {
   move_base_msgs::MoveBaseGoal goal;
-
+  ROS_INFO("Move start");
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
   goal.target_pose.pose.position.x = 0.0;
@@ -54,8 +54,6 @@ Move::on_start()
   goal.target_pose.pose.orientation.w = 1.0;
 
   set_goal(goal);
-
-  ROS_INFO("Move start");
 }
 
 BT::NodeStatus
@@ -70,14 +68,14 @@ Move::on_tick()
     //Hacer que de vueltas
   } else 
   {
-    //Cambiar las coordenadas x e y por los puntos de la persona pasaados por la BB
     counter_ = 0;
     std::cerr << "New Goal===========================" << std::endl;
+    //std::cerr << "Informacion de la persona: "<< person.depth << " Profundidad; "<< person.detected << " Deteccion" << std::endl;
     move_base_msgs::MoveBaseGoal goal;
 
     goal.target_pose.header.frame_id = "map";
     goal.target_pose.header.stamp = ros::Time::now();
-    goal.target_pose.pose.position.x = 3.0;
+    goal.target_pose.pose.position.x = 3.0; //person.depth
     goal.target_pose.pose.position.y = 2.0;
     goal.target_pose.pose.position.z = 0.0;
     goal.target_pose.pose.orientation.x = 0.0;
@@ -109,6 +107,6 @@ BT_REGISTER_NODES(factory)
         name, "move_base", config);
     };
 
-  factory.registerBuilder<behavior_trees::Move>(
+  factory.registerBuilder<robocup_home_education::Move>(
     "Move", builder);
 }

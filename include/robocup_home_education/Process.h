@@ -26,7 +26,7 @@
 namespace robocup_home_education
 {
 
-class Process
+class Process : public BT::ActionNodeBase
 {
   public:
     Process(const std::string& name, const BT::NodeConfiguration& config);
@@ -34,16 +34,11 @@ class Process
     void halt();
     BT::NodeStatus tick();
     
-    static BT::PortsList providedPorts1()
+    static BT::PortsList providedPorts()
     {
-      return { BT::InputPort<struct objectinimage>("person") };
+      return { BT::BidirectionalPort<struct objectinimage>("person") };
     }
-
-    static BT::PortsList providedPorts2()
-    {
-      return { BT::OutputPort<struct objectinimage>("person")};
-    }
-
+    
   private:
     //ros::NodeHandle nh_;
     int counter_;

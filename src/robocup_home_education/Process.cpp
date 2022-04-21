@@ -38,8 +38,11 @@ BT::NodeStatus
 Process::tick()
 {
   person = getInput<objectinimage>("person").value();
-
-  return BT::NodeStatus::SUCCESS;
+  std::cerr << "Informacion de la persona: "<< person.depth << " Profundidad; "<< person.detected << " Deteccion" << std::endl;
+  //MUERE AQUI
+  BT::TreeNode::setOutput("person", person);
+  std::cerr << "Muero" << std::endl;  //Llega hasta aqui 
+  return BT::NodeStatus::RUNNING;
 }
 
 }  // namespace robocup_home_education
