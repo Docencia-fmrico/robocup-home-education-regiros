@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <ReactiveSequence>
+            <Action ID="IfPerson" name="IfPerson" person="{person}"/>
+            <Action ID="Move" name="Move" person="{person}"/>
+        </ReactiveSequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="IfPerson">
+            <output_port name="{person}"/>
+        </Action>
+        <Action ID="Move">
+            <input_port name="{person}"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
