@@ -28,6 +28,7 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   tf
   image_geometry
+  message_generation
 )
 
 catkin_package(
@@ -47,6 +48,7 @@ CATKIN_DEPENDS
   pcl_ros
   image_transport
   image_geometry
+  message_runtime
 )
 
 find_package(OpenCV )
@@ -57,6 +59,11 @@ include_directories(
   #${ZMQ_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
+)
+
+add_message_files(
+  FILES
+  pos_person.msg
 )
 
 #add_library(robocup_home_education src/robocup_home_education/PIDController.cpp)
