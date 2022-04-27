@@ -15,12 +15,10 @@
 #ifndef ROBOCUP_HOME_EDUCATION_STR_FOLLOWOBJ_H
 #define ROBOCUP_HOME_EDUCATION_STR_FOLLOWOBJ_H
 
-#include <cv_bridge/cv_bridge.h>
 
 namespace robocup_home_education {
 
     struct objectinimage{
-        cv_bridge::CvImagePtr img;
         bool detected;
         int x;
         int y;

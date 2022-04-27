@@ -25,8 +25,9 @@
 
 #include <sensor_msgs/Image.h>
 #include <darknet_ros_msgs/BoundingBoxes.h>
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
+
+#include <std_msgs/Float32.h>
+#include <sensor_msgs/PointCloud2.h>
 
 #include "robocup_home_education/str_followobj.h"
 #include "robocup_home_education/PIDController.h"
@@ -35,34 +36,26 @@
 
 namespace robocup_home_education
 {
-class IfPerson : public BT::ActionNodeBase
+class IfPerson
 {
   public:
-    explicit IfPerson(const std::string& name, const BT::NodeConfiguration& config);
-
-    void halt();
-
-    BT::NodeStatus tick();
+    explicit IfPerson(const std::string& name);
 
     void callback_bbx(const sensor_msgs::ImageConstPtr& depth, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
-    static BT::PortsList providedPorts()
-    {
-      return { BT::OutputPort<struct objectinimage>("person")};
-    }
 
   private:
     ros::NodeHandle nh_;
 
     message_filters::Subscriber<sensor_msgs::Image> depth_sub_;
     message_filters::Subscriber<darknet_ros_msgs::BoundingBoxes> bbx_sub_;
+    
+    message_filters::Subscriber<sensor_msgs::PointCloud2>* pointcloud_sub_;
 
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, darknet_ros_msgs::BoundingBoxes> MySyncPolicy_bbx;
     message_filters::Synchronizer<MySyncPolicy_bbx> sync_bbx_;
 
     struct objectinimage person;
-    const double ideal_depth_ = 1.0;
-    const double ideal_x_ = 320;
 };
 }  // namespace robocup_home_education
 

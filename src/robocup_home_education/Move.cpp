@@ -60,13 +60,16 @@ BT::NodeStatus
 Move::on_tick()
 {
   ROS_INFO("Move tick");
-  person = getInput<objectinimage>("person").value();
+  person = getInput<robocup_home_education::objectinimage>("person").value();
   
-  if (counter_++ == 20) //Poner condicion de si la persona no ha sido detectada
+  /*if (counter_++ == 20) //Poner condicion de si la persona no ha sido detectada
+  if (!person.detected)
   {
     std::cerr << "Looking for person" << std::endl;
     //Hacer que de vueltas
-  } else 
+
+  } else */
+  if (counter_++ == 20)
   {
     counter_ = 0;
     std::cerr << "New Goal===========================" << std::endl;
@@ -75,8 +78,8 @@ Move::on_tick()
 
     goal.target_pose.header.frame_id = "map";
     goal.target_pose.header.stamp = ros::Time::now();
-    goal.target_pose.pose.position.x = 3.0; //person.depth
-    goal.target_pose.pose.position.y = 2.0;
+    goal.target_pose.pose.position.x = person.depth; //person.depth
+    goal.target_pose.pose.position.y = person.y;
     goal.target_pose.pose.position.z = 0.0;
     goal.target_pose.pose.orientation.x = 0.0;
     goal.target_pose.pose.orientation.y = 0.0;

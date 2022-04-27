@@ -24,6 +24,10 @@ find_package(catkin REQUIRED COMPONENTS
   cameras_cpp
   message_filters
   darknet_ros_msgs
+  pcl_conversions
+  pcl_ros
+  tf
+  image_geometry
 )
 
 catkin_package(
@@ -38,48 +42,62 @@ CATKIN_DEPENDS
   geometry_msgs
   message_filters
   darknet_ros_msgs
+  tf
+  pcl_conversions
+  pcl_ros
+  image_transport
+  image_geometry
 )
-find_package(BehaviorTreeV3)
-find_package(OpenCV)
+
+find_package(OpenCV )
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${ZMQ_INCLUDE_DIRS}
+  #${ZMQ_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
 
-add_library(robocup_home_education src/robocup_home_education/PIDController.cpp)
+#add_library(robocup_home_education src/robocup_home_education/PIDController.cpp)
 
-add_library(asr_if_person_bt_node SHARED src/robocup_home_education/IfPerson.cpp)
-target_link_libraries(asr_if_person_bt_node robocup_home_education)
+#add_library(asr_if_person_bt_node SHARED src/robocup_home_education/IfPerson.cpp)
+#target_link_libraries(asr_if_person_bt_node robocup_home_education)
 
-add_library(asr_process_bt_node SHARED src/robocup_home_education/Process.cpp)
-target_link_libraries(asr_process_bt_node robocup_home_education)
+#add_library(asr_process_bt_node SHARED src/robocup_home_education/Process.cpp)
+#target_link_libraries(asr_process_bt_node robocup_home_education)
 
-add_library(asr_moving_bt_node SHARED src/robocup_home_education/Move.cpp)
-target_link_libraries(asr_moving_bt_node robocup_home_education)
+#add_library(asr_moving_bt_node SHARED src/robocup_home_education/Move.cpp)
+#target_link_libraries(asr_moving_bt_node robocup_home_education)
 
-list(APPEND plugin_libs
-  asr_if_person_bt_node
-  asr_moving_bt_node
-  asr_process_bt_node
+#list(APPEND plugin_libs
+#  asr_if_person_bt_node
+#  asr_moving_bt_node
+#  asr_process_bt_node
+#)
+link_directories(
+	${PCL_LIBRARY_DIRS}
+)
+add_definitions(${PCL_DEFINITIONS})
+
+add_executable(node_person_tf 
+	src/node_person_tf.cpp
 )
 
-foreach(bt_plugin ${plugin_libs})
-  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
-  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
-endforeach()
+target_link_libraries(node_person_tf ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_executable(follow_person_node 
-  src/followperson_node.cpp
-)
 
-target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
+#foreach(bt_plugin ${plugin_libs})
+#  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+#  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
+#endforeach()
+
+#add_executable(follow_person_node 
+#  src/followperson_node.cpp
+#)
+
+#target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
 
 roslint_cpp(
- src/followperson_node.cpp
- include/robocup_home_education/PIDController.h src/robocup_home_education/PIDController.cpp
- include/robocup_home_education/IfPerson.h src/robocup_home_education/IfPerson.cpp
- include/robocup_home_education/Move.h src/robocup_home_education/Move.cpp
+  src/node_person_tf.cpp
 )

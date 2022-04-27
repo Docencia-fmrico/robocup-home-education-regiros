@@ -20,24 +20,13 @@
 
 #include "string"
 #include "ros/ros.h"
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
 
 namespace robocup_home_education
 {
 
-class Process : public BT::ActionNodeBase
+class Process
 {
   public:
-    Process(const std::string& name, const BT::NodeConfiguration& config);
-
-    void halt();
-    BT::NodeStatus tick();
-    
-    static BT::PortsList providedPorts()
-    {
-      return { BT::BidirectionalPort<struct objectinimage>("person") };
-    }
     
   private:
     //ros::NodeHandle nh_;

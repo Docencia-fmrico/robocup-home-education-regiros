@@ -24,19 +24,16 @@
 
 namespace robocup_home_education
 {
-  IfPerson::IfPerson(const std::string& name, const BT::NodeConfiguration & config)
-  : BT::ActionNodeBase(name, config),
-    depth_sub_(nh_, "/camera/depth/image_raw", 1),
+  IfPerson::IfPerson()
+  : depth_sub_(nh_, "/camera/depth/image_raw", 1),
     bbx_sub_(nh_, "/darknet_ros/bounding_boxes", 1),
+    //cameraTopicId_("/cloud_filtered/0"),
     sync_bbx_(MySyncPolicy_bbx(10), depth_sub_, bbx_sub_)
   {
     sync_bbx_.registerCallback(boost::bind(&IfPerson::callback_bbx, this, _1, _2));
-  }
-
-  void
-  IfPerson::halt()
-  {
-    ROS_INFO("IfPerson halt");
+    //private_nh.param("cloud_id", cameraTopicId_, cameraTopicId_);
+   // pointCloudSub_ =
+    //  new message_filters::Subscriber<sensor_msgs::PointCloud2> (nh_, cameraTopicId_, 5);
   }
 
   void
@@ -55,6 +52,7 @@ namespace robocup_home_education
     }
 
     person.detected = false;
+
     for (const auto & box : boxes->bounding_boxes)
     {
       person.x = (box.xmax + box.xmin) / 2;
@@ -65,6 +63,7 @@ namespace robocup_home_education
       if (person.detected)
       {
         person.depth = img_ptr_depth->image.at<float>(cv::Point(person.x, person.y)) * 1.0f;
+        
         break;
       }
     }
@@ -78,28 +77,14 @@ namespace robocup_home_education
     }
   }
 
-  BT::NodeStatus
-  IfPerson::tick()
-  {
-    ROS_INFO("IfPerson [%d]", person.detected);
-
-    if (person.detected)
-    {
-      ROS_INFO("Pasando booleano de persona y posicion");
-      BT::TreeNode::setOutput("person", person);
-      return BT::NodeStatus::SUCCESS;
-    }
-    else
-    {
-      BT::TreeNode::setOutput("person", person);
-      return BT::NodeStatus::FAILURE;
-    }
-  }
 }  // namespace robocup_home_education
-
-
-#include "behaviortree_cpp_v3/bt_factory.h"
-BT_REGISTER_NODES(factory)
-{
-  factory.registerNodeType<robocup_home_education::IfPerson>("IfPerson");
-}
+/*Topics de darknet ros:
+/darknet_ros/bounding_boxes
+/darknet_ros/check_for_objects/cancel
+/darknet_ros/check_for_objects/feedback
+/darknet_ros/check_for_objects/goal
+/darknet_ros/check_for_objects/result
+/darknet_ros/check_for_objects/status
+/darknet_ros/detection_image
+/darknet_ros/found_object
+*/

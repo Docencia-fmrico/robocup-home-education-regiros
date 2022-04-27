@@ -23,33 +23,4 @@
 namespace robocup_home_education
 {
 
-Process::Process(const std::string& name, const BT::NodeConfiguration& config)
-:BT::ActionNodeBase(name, config), counter_(0)
-{
-}
-
-void
-Process::halt()
-{
-  ROS_INFO("move halt");
-}
-
-BT::NodeStatus
-Process::tick()
-{
-  person = getInput<objectinimage>("person").value();
-  std::cerr << "Informacion de la persona: "<< person.depth << " Profundidad; "<< person.detected << " Deteccion" << std::endl;
-  //MUERE AQUI
-  BT::TreeNode::setOutput("person", person);
-  std::cerr << "Muero" << std::endl;  //Llega hasta aqui 
-  return BT::NodeStatus::RUNNING;
-}
-
 }  // namespace robocup_home_education
-
-
-#include "behaviortree_cpp_v3/bt_factory.h"
-BT_REGISTER_NODES(factory)
-{
-  factory.registerNodeType<robocup_home_education::Process>("Process");
-}
