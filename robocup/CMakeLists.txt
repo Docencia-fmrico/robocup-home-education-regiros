@@ -28,6 +28,9 @@ find_package(catkin REQUIRED COMPONENTS
   pcl_ros
   tf
   message_generation
+  tf2
+  tf2_ros
+  tf2_geometry_msgs
 )
 
 catkin_package(
@@ -47,9 +50,12 @@ CATKIN_DEPENDS
   pcl_ros
   image_transport
   message_runtime
+  tf2_geometry_msgs 
+  tf2 
+  tf2_ros
 )
 
-find_package(OpenCV )
+find_package(OpenCV)
 
 include_directories(
   include
@@ -94,11 +100,11 @@ add_executable(node_person_box
 
 target_link_libraries(node_person_box ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-add_executable(node_person_filtered 
-	src/nodo_rgbd_filter.cpp
+add_executable(node_persontf_sub 
+	src/nodo_tfperson_sub.cpp
 )
 
-target_link_libraries(node_person_filtered ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(node_persontf_sub ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 
 #foreach(bt_plugin ${plugin_libs})

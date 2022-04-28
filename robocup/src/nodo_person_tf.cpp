@@ -55,10 +55,10 @@ public:
   , cameraTopicId_("/cloud_filtered/0")
   {
     ros::NodeHandle private_nh("~");
-    private_nh.param("object_id", objectFrameId_, objectFrameId_);
+    private_nh.param("person_id", objectFrameId_, objectFrameId_);
     private_nh.param("cloud_id", cameraTopicId_, cameraTopicId_);
 
-    ROS_INFO("object_id: [%s]", objectFrameId_.c_str());
+    ROS_INFO("person_id: [%s]", objectFrameId_.c_str());
     ROS_INFO("cloud_id : [%s]", cameraTopicId_.c_str());
     sub_pos = nh_.subscribe("/robocup_home/Position_human", 1, &PersonTf::cb_person, this);
     cloud_sub_ = nh_.subscribe("/camera/depth/points", 1, &PersonTf::cloudCB, this);
@@ -96,9 +96,9 @@ public:
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr pcrgb(new pcl::PointCloud<pcl::PointXYZRGB>);
     pcl::fromROSMsg(cloud, *pcrgb);
 
-    auto point = pcrgb->at(person_y, person_x);
+    auto point = pcrgb->at(person_x, person_y);
     
-    if(!std::isnan(point.x) && detected_) {
+    if((!std::isnan(point.x) || !std::isinf(point.x)) && detected_) {
       ROS_INFO("ENTRO AL CLOUDCB");
       tf::StampedTransform transform_;
       transform_.setOrigin(tf::Vector3(point.x, point.y, point.z));
@@ -127,8 +127,8 @@ private:
   ros::Subscriber cloud_sub_;
   msgs::pos_person pos_person;
 
-  int person_x;
-  int person_y;
+  float person_x;
+  float person_y;
   bool detected_;
 
   tf::MessageFilter<sensor_msgs::PointCloud2>* tfPointCloudSub_;
@@ -146,7 +146,7 @@ private:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "person_tf");
+  ros::init(argc, argv, "person_tf_pub");
   PersonTf persontf;
   ros::spin();
   return 0;
