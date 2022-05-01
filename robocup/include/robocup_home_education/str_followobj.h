@@ -18,20 +18,13 @@
 
 namespace robocup_home_education {
 
-    struct objectinimage{
-        bool detected;
+    struct PointTF{
         int x;
         int y;
-        float depth; 
+        int z;
     };
     
-    typedef struct objectinimage objectinimage;
+    typedef struct PointTF PointTF;
 
-    struct speeds{
-        double angular;
-        double linear;
-    };
-
-    typedef struct speeds speeds;
 }
 #endif  // ROBOCUP_HOME_EDUCATION_STR_FOLLOWOBJ_H

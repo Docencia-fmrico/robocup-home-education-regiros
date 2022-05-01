@@ -43,12 +43,12 @@ class Move : public BTNavAction
 
     static BT::PortsList providedPorts()
     {
-      return { BT::InputPort<struct objectinimage>("person")};
+      return { BT::InputPort<PointTF>("point")};
     }
 
   private:
     int counter_;
-    struct objectinimage person;
+    PointTF p;
 };
 
 }  // namespace robocup_home_education

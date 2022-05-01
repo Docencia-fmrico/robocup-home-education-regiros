@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <SequenceStar>
+            <ReactiveFallback>
+                <Action ID="DetectedPerson" point="{Point}"/>
+                <Action ID="Move" point="{Point}"/>
+            </ReactiveFallback>
+        </SequenceStar>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="DetectedPerson">
+            <output_port name="{point}"/>
+        </Action>
+        <Action ID="Move">
+            <input_port name="{point}"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+

@@ -4,13 +4,13 @@ project(robocup)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_BUILD_TYPE Debug)
 
-#find_package(ZMQ)
-#if(ZMQ_FOUND)
-#    message(STATUS "ZeroMQ found.")
-#    add_definitions(-DZMQ_FOUND)
-#else()
-#  message(WARNING "ZeroMQ NOT found. Not including PublisherZMQ.")
-#endif()
+find_package(ZMQ)
+if(ZMQ_FOUND)
+    message(STATUS "ZeroMQ found.")
+    add_definitions(-DZMQ_FOUND)
+else()
+  message(WARNING "ZeroMQ NOT found. Not including PublisherZMQ.")
+endif()
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -54,16 +54,56 @@ CATKIN_DEPENDS
   tf2 
   tf2_ros
 )
-
+find_package(BehaviorTreeV3)
 find_package(OpenCV)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  #${ZMQ_INCLUDE_DIRS}
+  ${ZMQ_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
 )
+
+link_directories(
+	${PCL_LIBRARY_DIRS}
+)
+add_definitions(${PCL_DEFINITIONS})
+
+add_library(${PROJECT_NAME}
+  src/person_detected/detect_BBX.cpp
+  src/person_detected/person_tf.cpp
+)
+
+add_library(asr_movement_bt_node SHARED src/movement/Move.cpp)
+
+add_library(asr_detectedperson_bt_node SHARED src/person_detected/DetectedPerson.cpp)
+target_link_libraries(asr_detectedperson_bt_node robocup)
+target_link_libraries(asr_movement_bt_node robocup)
+
+#target_link_libraries(nodo_person_detected_person ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+#target_link_libraries(node_tree_move ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+
+list(APPEND plugin_libs
+  asr_detectedperson_bt_node
+  asr_movement_bt_node
+)
+
+foreach(bt_plugin ${plugin_libs})
+  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
+endforeach()
+
+add_executable(node_tree_move 
+	src/nodo_tree_move.cpp
+)
+target_link_libraries(node_tree_move ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
+#target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
+
+#roslint_cpp(
+#)
+
 
 
 
@@ -83,41 +123,3 @@ include_directories(
 #  asr_moving_bt_node
 #  asr_process_bt_node
 #)
-link_directories(
-	${PCL_LIBRARY_DIRS}
-)
-add_definitions(${PCL_DEFINITIONS})
-
-add_executable(nodo_person_tf 
-	src/nodo_person_tf.cpp
-)
-
-target_link_libraries(nodo_person_tf ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-add_executable(node_person_box 
-	src/node_person_box.cpp
-)
-
-target_link_libraries(node_person_box ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-add_executable(node_persontf_sub 
-	src/nodo_tfperson_sub.cpp
-)
-
-target_link_libraries(node_persontf_sub ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-
-#foreach(bt_plugin ${plugin_libs})
-#  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
-#  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
-#endforeach()
-
-#add_executable(follow_person_node 
-#  src/followperson_node.cpp
-#)
-
-#target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
-
-roslint_cpp(
-  src/node_person_tf.cpp
-)

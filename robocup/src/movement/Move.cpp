@@ -35,7 +35,7 @@ Move::Move(
 void
 Move::on_halt()
 {
-  ROS_INFO("Move halt");  //Se realiza el halt
+  ROS_INFO("Move halt");
 }
 
 void
@@ -45,7 +45,7 @@ Move::on_start()
   ROS_INFO("Move start");
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
-  goal.target_pose.pose.position.x = 0.0;
+  goal.target_pose.pose.position.x = 3.0;
   goal.target_pose.pose.position.y = 0.0;
   goal.target_pose.pose.position.z = 0.0;
   goal.target_pose.pose.orientation.x = 0.0;
@@ -60,27 +60,21 @@ BT::NodeStatus
 Move::on_tick()
 {
   ROS_INFO("Move tick");
-  person = getInput<robocup_home_education::objectinimage>("person").value();
+  p = getInput<PointTF>("point").value();
+  //std::cerr << "PUNTOS: ["<< p.x << ", " << p.y << ", " << p.z << "]" << std::endl;
   
-  /*if (counter_++ == 20) //Poner condicion de si la persona no ha sido detectada
-  if (!person.detected)
-  {
-    std::cerr << "Looking for person" << std::endl;
-    //Hacer que de vueltas
-
-  } else */
   if (counter_++ == 20)
   {
     counter_ = 0;
     std::cerr << "New Goal===========================" << std::endl;
-    //std::cerr << "Informacion de la persona: "<< person.depth << " Profundidad; "<< person.detected << " Deteccion" << std::endl;
+    //std::cerr << "PUNTOS: ["<< p.x << ", " << p.y << ", " << p.z << "]" << std::endl;
     move_base_msgs::MoveBaseGoal goal;
 
     goal.target_pose.header.frame_id = "map";
     goal.target_pose.header.stamp = ros::Time::now();
-    goal.target_pose.pose.position.x = person.depth; //person.depth
-    goal.target_pose.pose.position.y = person.y;
-    goal.target_pose.pose.position.z = 0.0;
+    goal.target_pose.pose.position.x = p.x-0.5;
+    goal.target_pose.pose.position.y = p.y-0.5;
+    goal.target_pose.pose.position.z = p.z;
     goal.target_pose.pose.orientation.x = 0.0;
     goal.target_pose.pose.orientation.y = 0.0;
     goal.target_pose.pose.orientation.z = 0.0;

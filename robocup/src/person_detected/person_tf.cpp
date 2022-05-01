@@ -1,4 +1,4 @@
-// Copyright 2019 Intelligent Robotics Lab
+// Copyright 2022 Intelligent Robotics Lab
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
+/*
 #include <opencv2/core/types.hpp>
 
 #include <string>
@@ -45,12 +45,13 @@
 #include <boost/algorithm/string.hpp>
 #include "msgs/pos_person.h"
 #include "ros/ros.h"
+*/
+#include "robocup_home_education/person_detected/person_tf.h"
 
-class PersonTf
+namespace robocup_home_education
 {
-public:
-  
-  PersonTf(): objectFrameId_("/person/0")
+  ///camera/depth_registered/points -> topic camara clase
+  PersonTf::PersonTf(): objectFrameId_("/person/0")
   , workingFrameId_("/base_footprint")
   , cameraTopicId_("/cloud_filtered/0")
   {
@@ -62,15 +63,10 @@ public:
     ROS_INFO("cloud_id : [%s]", cameraTopicId_.c_str());
     sub_pos = nh_.subscribe("/robocup_home/Position_human", 1, &PersonTf::cb_person, this);
     cloud_sub_ = nh_.subscribe("/camera/depth/points", 1, &PersonTf::cloudCB, this);
-    /*pointCloudSub_ =
-      new message_filters::Subscriber<sensor_msgs::PointCloud2> (nh_, cameraTopicId_, 5);
-    tfPointCloudSub_ =
-      new tf::MessageFilter<sensor_msgs::PointCloud2> (*pointCloudSub_, tfListener_, workingFrameId_, 5);
-    tfPointCloudSub_->registerCallback(boost::bind(&PersonTf::cloudCB, this, _1));*/
   }
 
   void
-  cb_person(const msgs::pos_person::ConstPtr& person)
+  PersonTf::cb_person(const msgs::pos_person::ConstPtr& person)
   {
     ROS_INFO("ENTRO AL PERSONCB");
     person_x = person->p_x;
@@ -79,7 +75,7 @@ public:
   }
 
   void
-  cloudCB(const sensor_msgs::PointCloud2::ConstPtr& cloud_in)
+  PersonTf::cloudCB(const sensor_msgs::PointCloud2::ConstPtr& cloud_in)
   {
     sensor_msgs::PointCloud2 cloud;
     
@@ -119,57 +115,4 @@ public:
       }
     }
   }
-
-private:
-  ros::NodeHandle nh_;
-
-  ros::Subscriber sub_pos;
-  ros::Subscriber cloud_sub_;
-  msgs::pos_person pos_person;
-
-  float person_x;
-  float person_y;
-  bool detected_;
-
-  tf::MessageFilter<sensor_msgs::PointCloud2>* tfPointCloudSub_;
-  message_filters::Subscriber<sensor_msgs::PointCloud2>* pointCloudSub_;
-
-  tf::TransformBroadcaster tfBroadcaster_;
-  tf::TransformListener tfListener_;
-
-  std::string objectFrameId_;
-  std::string workingFrameId_;
-  std::string cameraTopicId_;
-  
-  
-};
-
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "person_tf_pub");
-  PersonTf persontf;
-  ros::spin();
-  return 0;
-}
-
-/*Mensaje sensor_msgs/CameraInfo del topic /camera/depth/camera_info
-std_msgs/Header header
-  uint32 seq
-  time stamp
-  string frame_id
-uint32 height
-uint32 width
-string distortion_model
-float64[] D
-float64[9] K
-float64[9] R
-float64[12] P
-uint32 binning_x
-uint32 binning_y
-sensor_msgs/RegionOfInterest roi
-  uint32 x_offset
-  uint32 y_offset
-  uint32 height
-  uint32 width
-  bool do_rectify
-*/
+}   // namespace robocup_home_education
