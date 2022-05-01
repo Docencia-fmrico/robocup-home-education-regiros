@@ -3,21 +3,17 @@
     <!-- ////////// -->
     <BehaviorTree ID="BehaviorTree">
         <SequenceStar>
-            <Sequence>
-                <Timeout msec="2500">
-                    <Action ID="DetectedPerson" point="{point}"/>
-                </Timeout>
-                <Action ID="Move" point="{point}"/>
-            </Sequence>
+            <Action ID="SendPoint" point="{point}"/>
+            <Action ID="Move" point="{point}"/>
         </SequenceStar>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Action ID="DetectedPerson">
-            <output_port name="{point}"/>
-        </Action>
         <Action ID="Move">
             <input_port name="{point}"/>
+        </Action>
+        <Action ID="SendPoint">
+            <output_port name="{point}"/>
         </Action>
     </TreeNodesModel>
     <!-- ////////// -->

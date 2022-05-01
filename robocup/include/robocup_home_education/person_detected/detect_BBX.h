@@ -46,6 +46,7 @@ private:
   //Publicador del nuevo topic
   ros::Publisher pos_pub;
   int depth_;
+  double prob_;
 
   //PARA DARKNET
   message_filters::Subscriber<sensor_msgs::Image> depth_sub_;

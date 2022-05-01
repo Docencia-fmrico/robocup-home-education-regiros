@@ -19,9 +19,9 @@
 namespace robocup_home_education {
 
     struct PointTF{
-        int x;
-        int y;
-        int z;
+        double x;
+        double y;
+        double z;
     };
     
     typedef struct PointTF PointTF;

@@ -31,6 +31,9 @@ find_package(catkin REQUIRED COMPONENTS
   tf2
   tf2_ros
   tf2_geometry_msgs
+  actionlib
+  actionlib_msgs
+  move_base_msgs
 )
 
 catkin_package(
@@ -50,9 +53,11 @@ CATKIN_DEPENDS
   pcl_ros
   image_transport
   message_runtime
-  tf2_geometry_msgs 
-  tf2 
+  tf2_geometry_msgs
+  tf2
   tf2_ros
+  actionlib_msgs
+  move_base_msgs
 )
 find_package(BehaviorTreeV3)
 find_package(OpenCV)
@@ -76,18 +81,17 @@ add_library(${PROJECT_NAME}
 )
 
 add_library(asr_movement_bt_node SHARED src/movement/Move.cpp)
-
 add_library(asr_detectedperson_bt_node SHARED src/person_detected/DetectedPerson.cpp)
+add_library(asr_sendpoint_bt_node SHARED src/start/SendPoint.cpp)
 target_link_libraries(asr_detectedperson_bt_node robocup)
 target_link_libraries(asr_movement_bt_node robocup)
+target_link_libraries(asr_sendpoint_bt_node robocup)
 
-#target_link_libraries(nodo_person_detected_person ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-#target_link_libraries(node_tree_move ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 list(APPEND plugin_libs
   asr_detectedperson_bt_node
   asr_movement_bt_node
+  asr_sendpoint_bt_node
 )
 
 foreach(bt_plugin ${plugin_libs})
@@ -99,27 +103,12 @@ add_executable(node_tree_move
 	src/nodo_tree_move.cpp
 )
 target_link_libraries(node_tree_move ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
+
+add_executable(node_first_goal
+	src/nodo_first_goal.cpp
+)
+target_link_libraries(node_first_goal ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
 #target_link_libraries(follow_person_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
 
 #roslint_cpp(
-#)
-
-
-
-
-#add_library(robocup_home_education src/robocup_home_education/PIDController.cpp)
-
-#add_library(asr_if_person_bt_node SHARED src/robocup_home_education/IfPerson.cpp)
-#target_link_libraries(asr_if_person_bt_node robocup_home_education)
-
-#add_library(asr_process_bt_node SHARED src/robocup_home_education/Process.cpp)
-#target_link_libraries(asr_process_bt_node robocup_home_education)
-
-#add_library(asr_moving_bt_node SHARED src/robocup_home_education/Move.cpp)
-#target_link_libraries(asr_moving_bt_node robocup_home_education)
-
-#list(APPEND plugin_libs
-#  asr_if_person_bt_node
-#  asr_moving_bt_node
-#  asr_process_bt_node
 #)

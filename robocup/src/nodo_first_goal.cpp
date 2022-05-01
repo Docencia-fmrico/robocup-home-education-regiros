@@ -26,20 +26,20 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "tree_carry");
+  ros::init(argc, argv, "tree_firstgoal");
   ros::NodeHandle n;
 
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
-  factory.registerFromPlugin(loader.getOSName("asr_detectedperson_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_sendpoint_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_movement_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
   //blackboard->set("point", "Point");
 
   std::string pkgpath = ros::package::getPath("robocup");
-  std::string xml_file = pkgpath + "/behavior_trees/bt_carry_my_luggage.xml";
+  std::string xml_file = pkgpath + "/behavior_trees/bt_first_goal.xml";
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
   auto publisher_zmq = std::make_shared<BT::PublisherZMQ>(tree, 10, 1666, 1667);

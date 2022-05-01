@@ -45,8 +45,8 @@ Move::on_start()
   ROS_INFO("Move start");
   goal.target_pose.header.frame_id = "map";
   goal.target_pose.header.stamp = ros::Time::now();
-  goal.target_pose.pose.position.x = 3.0;
-  goal.target_pose.pose.position.y = 0.0;
+  goal.target_pose.pose.position.x = -1.000000;//-34.920000, -11.880000
+  goal.target_pose.pose.position.y = -11.240000;
   goal.target_pose.pose.position.z = 0.0;
   goal.target_pose.pose.orientation.x = 0.0;
   goal.target_pose.pose.orientation.y = 0.0;
@@ -59,21 +59,19 @@ Move::on_start()
 BT::NodeStatus
 Move::on_tick()
 {
-  ROS_INFO("Move tick");
   p = getInput<PointTF>("point").value();
-  //std::cerr << "PUNTOS: ["<< p.x << ", " << p.y << ", " << p.z << "]" << std::endl;
+  ROS_INFO("Move tick");
   
   if (counter_++ == 20)
   {
-    counter_ = 0;
     std::cerr << "New Goal===========================" << std::endl;
-    //std::cerr << "PUNTOS: ["<< p.x << ", " << p.y << ", " << p.z << "]" << std::endl;
+    std::cerr << "PUNTOS: ["<< p.x << ", " << p.y << ", " << p.z << "]" << std::endl;
     move_base_msgs::MoveBaseGoal goal;
 
     goal.target_pose.header.frame_id = "map";
     goal.target_pose.header.stamp = ros::Time::now();
-    goal.target_pose.pose.position.x = p.x-0.5;
-    goal.target_pose.pose.position.y = p.y-0.5;
+    goal.target_pose.pose.position.x = p.x-0.6;
+    goal.target_pose.pose.position.y = p.y-0.6;
     goal.target_pose.pose.position.z = p.z;
     goal.target_pose.pose.orientation.x = 0.0;
     goal.target_pose.pose.orientation.y = 0.0;
@@ -81,6 +79,8 @@ Move::on_tick()
     goal.target_pose.pose.orientation.w = 1.0;
 
     set_goal(goal);
+  } else {
+    ROS_INFO("Move FAILURE");
   }
 
   return BT::NodeStatus::RUNNING;

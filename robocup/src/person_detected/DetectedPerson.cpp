@@ -28,7 +28,7 @@ namespace robocup_home_education
   : BT::ActionNodeBase(name, config),
     listener(buffer)
   {
-    
+    //personbbx.callback_bbx();
     sub_pos = nh_.subscribe("/robocup_home/Position_human", 1, &Detected::cb_person, this);
   }
 
@@ -66,7 +66,7 @@ namespace robocup_home_education
       p_tf.x = bf2person.getOrigin().x();
       p_tf.y = bf2person.getOrigin().y();
       p_tf.z = bf2person.getOrigin().z();
-
+      ROS_INFO("******************ENVIO TRANSFORMADA A MOVE******************");
       /*ROS_INFO("map -> person [%lf, %lf, %lf] dist = %lf\t%lf ago",
         p_tf.x,
         p_tf.y,
@@ -74,13 +74,14 @@ namespace robocup_home_education
         dist_,
         (ros::Time::now() - bf2person.stamp_).toSec());*/
       BT::TreeNode::setOutput("point", p_tf);
-      
+      return BT::NodeStatus::SUCCESS;
     }
     else
     {
       ROS_ERROR("%s", error.c_str());
+      return BT::NodeStatus::FAILURE;
     }
-    return BT::NodeStatus::SUCCESS;
+    
   }
 } //namespace robocup_home_education
 

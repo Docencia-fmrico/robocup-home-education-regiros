@@ -25,6 +25,7 @@ namespace robocup_home_education
   , bbx_sub_(nh_, "/darknet_ros/bounding_boxes", 1)
   , sync_bbx_(MySyncPolicy_bbx(10), depth_sub_, bbx_sub_)
   , depth_(0)
+  , prob_(0)
   {
     pos_pub = nh_.advertise<msgs::pos_person>("/robocup_home/Position_human", 1);
     sync_bbx_.registerCallback(boost::bind(&PersonBBX::callback_bbx, this, _1, _2));
@@ -56,18 +57,19 @@ namespace robocup_home_education
 
       if (pos_person.detected_)
       {
+        prob_ = box.probability;
         depth_ = img_ptr_depth->image.at<float>(cv::Point(pos_person.p_x, pos_person.p_y)) * 1.0f;
-        std::cerr << pos_person.detected_ << " distance -> (" << depth_ << std::endl;
+        std::cerr << pos_person.detected_ << " distance -> (" << depth_ << "Probabilidad -> (" << box.probability << std::endl;
         break;
       }
     }
-    if (depth_ > 4.0 || depth_ < 0.0 || std::isnan(depth_) || std::isinf(depth_))
+    if (depth_ > 4.0 || depth_ < 0.0 || prob_ < 0.65 || std::isnan(depth_) || std::isinf(depth_))
     {
       pos_person.detected_ = false;
     }
     if (pos_person.detected_)
     {
-      std::cerr << "person at " << depth_ << " in pixel " << pos_person.p_x << std::endl;
+      std::cerr << "person at " << depth_ << " in pixel " << pos_person.p_x << " Prob: " << prob_ <<  std::endl;
       pos_pub.publish(pos_person);
     }
   }
