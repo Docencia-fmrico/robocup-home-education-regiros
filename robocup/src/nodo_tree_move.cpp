@@ -22,12 +22,15 @@
 #include "behaviortree_cpp_v3/utils/shared_library.h"
 #include "behaviortree_cpp_v3/loggers/bt_zmq_publisher.h"
 
+
 #include "ros/package.h"
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "tree_carry");
   ros::NodeHandle n;
+
+  
 
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;

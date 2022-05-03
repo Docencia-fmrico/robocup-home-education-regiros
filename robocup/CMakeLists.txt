@@ -34,6 +34,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   actionlib_msgs
   move_base_msgs
+  navfn
 )
 
 catkin_package(
@@ -58,6 +59,7 @@ CATKIN_DEPENDS
   tf2_ros
   actionlib_msgs
   move_base_msgs
+  navfn
 )
 find_package(BehaviorTreeV3)
 find_package(OpenCV)

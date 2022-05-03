@@ -23,8 +23,13 @@
 #include "robocup_home_education/BTNavAction.h"
 #include "robocup_home_education/str_followobj.h"
 
+#include "nav_msgs/GetPlan.h"
+#include "geometry_msgs/PointStamped.h"
+#include "navfn/MakeNavPlan.h"
 
+#include <actionlib/client/simple_action_client.h>
 #include <string>
+//typedef actionlib::SimpleActionClient<> Client;
 
 namespace robocup_home_education
 {
@@ -37,6 +42,9 @@ class Move : public BTNavAction
     const BT::NodeConfiguration & config);
 
     void on_halt() override;
+
+    void fillPathRequest(navfn::MakeNavPlanRequest &request);
+
     BT::NodeStatus on_tick() override;;
     void on_start() override;
     void on_feedback(const move_base_msgs::MoveBaseFeedbackConstPtr& feedback) override;
@@ -47,6 +55,18 @@ class Move : public BTNavAction
     }
 
   private:
+    ros::NodeHandle n;
+
+    
+    ros::ServiceClient Client; //
+    geometry_msgs::PoseStamped start;
+    geometry_msgs::PoseStamped goal;
+    //geometry_msgs::PoseStamped path_[5575775757];
+
+    navfn::MakeNavPlan srv;
+
+    //Client ac;
+
     int counter_;
     PointTF p;
 };
