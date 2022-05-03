@@ -11,9 +11,7 @@ class Speech: public DialogInterface
     Speech(): nh_()
     {
       this->registerCallback(std::bind(&Speech::noIntentCB, this, ph::_1), "Default Fallback Intent");
-      this->registerCallback(
-        std::bind(&Speech::welcomeIntentCB, this, ph::_1),
-        "Default Welcome Intent");
+      this->registerCallback(std::bind(&Speech::welcomeIntentCB, this, ph::_1), "Default Welcome Intent");
       this->registerCallback(std::bind(&Speech::luggageIntentCB, this, ph::_1), "Luggage Intent");
     }
 
@@ -48,7 +46,9 @@ class Speech: public DialogInterface
       if (color.empty()) {
         listen();
       }
-      ros::shutdown();
+      else {
+        ros::shutdown();
+      }
     }
   
   bool done = false;

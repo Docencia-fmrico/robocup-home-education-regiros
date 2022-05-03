@@ -16,11 +16,15 @@ class Speech: public DialogInterface
         std::bind(&Speech::welcomeIntentCB, this, ph::_1),
         "Default Welcome Intent");
       this->registerCallback(std::bind(&Speech::luggageIntentCB, this, ph::_1), "Luggage Intent");
+
+      service_ = nh_.advertiseService("speech", &gb_dialog::Speech::startDialog, this);
+      response_.query_text = '';
     }
 
     void noIntentCB(dialogflow_ros_msgs::DialogflowResult result)
     {
       ROS_INFO("[Speech] noIntentCB: intent [%s]", result.intent.c_str());
+      response_ = result;
       speak(result.fulfillment_text);
       listen();
     }
@@ -28,6 +32,7 @@ class Speech: public DialogInterface
     void welcomeIntentCB(dialogflow_ros_msgs::DialogflowResult result)
     {
       ROS_INFO("[Speech] welcomeIntentCB: intent [%s]", result.intent.c_str());
+      response_ = result;
       speak(result.fulfillment_text);
     }
 
@@ -43,6 +48,7 @@ class Speech: public DialogInterface
 
       ROS_INFO("luggageIntentCB: intent [%s]", result.intent.c_str());
       ROS_INFO("Color: %s", color.c_str());
+      response_ = result;
       speak(result.fulfillment_text);
       if (color.empty()) {
         listen();
@@ -50,15 +56,20 @@ class Speech: public DialogInterface
     }
 
     bool startDialog(speech::speech::Request &req, speech::speech::Response &res){
-      if (req.action == 0) {
-        listen();
-      }
-      else {
-        ros::Time stamp;
+      ros::Time stamp;
 
-        speak(req.speak_text);
-        stamp = ros::Time::now();
-        while ((ros::Time::now() - stamp).sec != static_cast<int>(req.speak_text.length() * 0.10) ) {}
+      speak(req.speak_text);
+      stamp = ros::Time::now();
+      while ((ros::Time::now() - stamp).sec != static_cast<int>(req.speak_text.length() * 0.10) ) {}
+
+      if (req.action == 1) {
+        listen();
+        while (response_.query_text == ''){}
+        for (const auto & param : response_.parameters) {
+          for (const auto & value : param.value) {
+            res.response = value;
+          }
+        }
       }
 
       return true;
@@ -66,18 +77,18 @@ class Speech: public DialogInterface
 
   private:
     ros::NodeHandle nh_;
+    ros::ServiceServer service_;
+    dialogflow_ros_msgs::DialogflowResult response_;
 };
 }  // namespace gb_dialog
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "speech_node"); 
-  ros::NodeHandle nh2_;
+  ros::init(argc, argv, "speech_srv_node"); 
   gb_dialog::Speech forwarder;
 
-
-  ros::ServiceServer service = nh2_.advertiseService("speech", gb_dialog::Speech::startDialog);
-
-  ros::spinOnce();
+  ROS_INFO("speech ready");
+  
+  ros::spin();
   return 0;
 }
