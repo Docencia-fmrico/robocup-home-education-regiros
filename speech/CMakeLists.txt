@@ -47,10 +47,10 @@ find_package(catkin REQUIRED COMPONENTS
 
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  speech.srv
-)
+#add_service_files(
+#  FILES
+#  speech.srv
+#)
 
 
 ## Generate added messages and services with any dependencies listed here
@@ -70,10 +70,8 @@ add_service_files(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES speech
-#  CATKIN_DEPENDS actionlib actionlib_msgs dialogflow_ros_msgs gb_dialog roscpp roslint sound_play std_msgs std_srvs
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS actionlib actionlib_msgs dialogflow_ros_msgs gb_dialog roscpp roslint sound_play std_msgs std_srvs
 )
 
 ###########
@@ -83,6 +81,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 

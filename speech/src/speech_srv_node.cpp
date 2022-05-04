@@ -18,7 +18,7 @@ class Speech: public DialogInterface
       this->registerCallback(std::bind(&Speech::luggageIntentCB, this, ph::_1), "Luggage Intent");
 
       service_ = nh_.advertiseService("speech", &gb_dialog::Speech::startDialog, this);
-      response_.query_text = '';
+      //response_.query_text = '';
     }
 
     void noIntentCB(dialogflow_ros_msgs::DialogflowResult result)
@@ -64,7 +64,7 @@ class Speech: public DialogInterface
 
       if (req.action == 1) {
         listen();
-        while (response_.query_text == ''){}
+        //while (response_.query_text == ''){}
         for (const auto & param : response_.parameters) {
           for (const auto & value : param.value) {
             res.response = value;
