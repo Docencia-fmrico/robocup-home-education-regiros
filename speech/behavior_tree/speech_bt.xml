@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Sequence name="Main">
+            <Sequence name="Move to entry">
+                <Action ID="start"/>
+                <Action ID="move"/>
+            </Sequence>
+            <Sequence name="Person">
+                <Action ID="ask_name"/>
+                <Action ID="ask_fav"/>
+            </Sequence>
+            <Sequence name="Seat">
+                <Action ID="move"/>
+                <Action ID="detect_seat"/>
+                <Action ID="ask_old"/>
+                <Action ID="offer_seat"/>
+            </Sequence>
+            <Sequence name="Report Person">
+                <Action ID="say_info"/>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="ask_fav"/>
+        <Action ID="ask_name"/>
+        <Action ID="ask_old"/>
+        <Action ID="detect_seat"/>
+        <Action ID="move"/>
+        <Action ID="offer_seat"/>
+        <Action ID="say_info"/>
+        <Action ID="start"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
