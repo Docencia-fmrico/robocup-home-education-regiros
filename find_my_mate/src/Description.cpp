@@ -17,7 +17,7 @@ namespace find_my_mate
   BT::NodeStatus 
   Description::tick()
   {
-    BT::TreeNode::setInput("info", info_);
+    BT::TreeNode::getInput("info", info_);
     std::ostringstream oss;
     std::string phrase;
 

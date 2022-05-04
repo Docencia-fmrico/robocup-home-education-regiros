@@ -17,7 +17,7 @@ namespace find_my_mate
   }
 
   BT::NodeStatus
-  GetInfo::tick()
+  Start::tick()
   {
     speech::Chat forwarder;
     ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
@@ -32,7 +32,7 @@ namespace find_my_mate
   }
 
   BT::NodeStatus
-  startCallback(const std_msgs::StringConstPtr& msg)
+  Start::startCallback(const std_msgs::StringConstPtr& msg)
   {
     ROS_INFO("PARAMETRO: %s", msg->data.c_str());
     if (msg->data == "start"){
