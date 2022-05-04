@@ -2,32 +2,35 @@
 <root main_tree_to_execute="find_my_mate_bt">
     <!-- ////////// -->
     <BehaviorTree ID="find_my_mate_bt">
-        <Repeat num_cycles="3">
-            <SequenceStar>
+        <SequenceStar>
+            <Action ID="Start"/>
+            <Repeat num_cycles="3">
                 <SequenceStar>
-                    <Action ID="GoPosition"/>
-                    <Action ID="RotateUPerson"/>
+                    <SequenceStar>
+                        <Action ID="GoPosition"/>
+                        <Action ID="RotateUPerson"/>
+                    </SequenceStar>
+                    <Action ID="GetInfo" {info}=""/>
+                    <SequenceStar>
+                        <Action ID="GoPosition"/>
+                        <Action ID="RotateUPerson"/>
+                    </SequenceStar>
+                    <Action ID="Description" {info}=""/>
                 </SequenceStar>
-                <Action ID="GetInfo" Info="{info}"/>
-                <SequenceStar>
-                    <Action ID="GoPosition"/>
-                    <Action ID="RotateUPerson"/>
-                </SequenceStar>
-                <Action ID="Description" Info="{info}" />
-            </SequenceStar>
-        </Repeat>
+            </Repeat>
+        </SequenceStar>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Action ID="GetInfo">
-            <output_port name="{info}">info of person</output_port>
-        </Action>
-
         <Action ID="Description">
             <input_port name="{info}"/>
         </Action>
+        <Action ID="GetInfo">
+            <output_port name="{info}">info of person</output_port>
+        </Action>
         <Action ID="GoPosition"/>
         <Action ID="RotateUPerson"/>
+        <Action ID="Start"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>
