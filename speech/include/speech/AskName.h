@@ -18,6 +18,11 @@ class AskName : public BT::ActionNodeBase
     BT::NodeStatus tick();
 
     void nameCallback(const std_msgs::StringConstPtr& msg);
+
+    static PortsList providedPorts()
+    {
+        return { OutputPort<PInfo>("Name") };
+    }
     
 };
 }; //  namespace speech

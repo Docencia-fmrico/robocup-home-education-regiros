@@ -1,4 +1,4 @@
-#include "speech/AskName.h"
+#include "speech/AskDrink.h"
 #include "speech/Chat.cpp"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "ros/ros.h"
@@ -6,19 +6,19 @@
 
 namespace speech
 {
-  AskName::AskName(const std::string& name, const BT::NodeConfiguration& config)
+  AskDrink::AskDrink(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
     nh_("~"),
   {}
 
   void
-  AskName::halt()
+  AskDrink::halt()
   {
-    ROS_INFO("AskName halt");
+    ROS_INFO("AskDrink halt");
   }
 
   BT::NodeStatus
-  AskName::tick()
+  AskDrink::tick()
   {
     Chat forwarder;
     ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
@@ -33,10 +33,10 @@ namespace speech
   }
 
   BT::NodeStatus
-  AskName::nameCallback(const std_msgs::StringConstPtr& msg)
+  AskDrink::drinkCallback(const std_msgs::StringConstPtr& msg)
   {
     ROS_INFO("PARAMETRO: %s", msg->data.c_str());
-    BT::TreeNode::setOutput("Name", msg->data);
+    BT::TreeNode::setOutput("FavDrink", msg->data);
     return BT::NodeStatus::SUCCESS;
   }
 
@@ -45,5 +45,5 @@ namespace speech
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<speech::AskName>("AskName");
+  factory.registerNodeType<speech::AskDrink>("AskDrink");
 }

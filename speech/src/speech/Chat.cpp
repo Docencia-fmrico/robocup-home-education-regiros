@@ -18,6 +18,8 @@ class Chat : public gb_dialog::DialogInterface
       this->registerCallback(std::bind(&Chat::luggageIntentCB, this, ph::_1), "Luggage Intent");
       this->registerCallback(std::bind(&Chat::startCB, this, ph::_1), "Start");
       this->registerCallback(std::bind(&Chat::askNameCB, this, ph::_1), "Ask Name");
+      this->registerCallback(std::bind(&Chat::askDrinkCB, this, ph::_1), "Ask Drink");
+
     }
 
     void 
@@ -87,6 +89,28 @@ class Chat : public gb_dialog::DialogInterface
       }
       else {
         pub_param_.publish(name);
+      }
+    }
+
+    void 
+    askDrinkCB(dialogflow_ros_msgs::DialogflowResult result)
+    {
+      std_msgs::String drink;
+
+      for (const auto & param : result.parameters) {
+        for (const auto & value : param.value) {
+          drink.data = value;
+        }
+      }
+
+      ROS_INFO("askDrinkCB: intent [%s]", result.intent.c_str());
+ 
+      speak(result.fulfillment_text);
+      if (drink.data.empty()) {
+        listen();
+      }
+      else {
+        pub_param_.publish(drink);
       }
     }
 

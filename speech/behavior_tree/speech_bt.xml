@@ -8,8 +8,8 @@
                 <Sequence>
                     <Action ID="Move" name="Move to entry"/>
                     <Sequence name="Person">
-                        <Action ID="AskName"/>
-                        <Action ID="AskFav"/>
+                        <Action ID="AskName" Name="{info}"/>
+                        <Action FavDrink="{info}" ID="AskDrink"/>
                     </Sequence>
                     <Sequence name="Seat">
                         <Action ID="Move"/>
@@ -19,7 +19,7 @@
                     </Sequence>
                     <Sequence name="Report Person">
                         <Action ID="Move"/>
-                        <Action ID="SayInfo"/>
+                        <Action ID="SayInfo" ReceiveInfo="{info}"/>
                     </Sequence>
                 </Sequence>
             </Repeat>
@@ -27,13 +27,19 @@
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
-        <Action ID="AskFav"/>
-        <Action ID="AskName"/>
+        <Action ID="AskDrink">
+            <output_port name="FavDrink"/>
+        </Action>
+        <Action ID="AskName">
+            <output_port name="Name"/>
+        </Action>
         <Action ID="AskOld"/>
         <Action ID="DetectSeat"/>
         <Action ID="Move"/>
         <Action ID="OfferSeat"/>
-        <Action ID="SayInfo"/>
+        <Action ID="SayInfo">
+            <input_port default="{info}" name="ReceiveInfo"/>
+        </Action>
         <Action ID="Start"/>
     </TreeNodesModel>
     <!-- ////////// -->
