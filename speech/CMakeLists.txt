@@ -24,11 +24,23 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   std_srvs
   behaviortree_cpp_v3
+  message_filters
 )
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS actionlib actionlib_msgs dialogflow_ros_msgs gb_dialog roscpp roslint sound_play std_msgs std_srvs behaviortree_cpp_v3
+  CATKIN_DEPENDS 
+  actionlib 
+  actionlib_msgs 
+  dialogflow_ros_msgs 
+  gb_dialog 
+  roscpp 
+  roslint 
+  sound_play 
+  std_msgs 
+  std_srvs 
+  behaviortree_cpp_v3
+  message_filters
 )
 find_package(BehaviorTreeV3)
 

@@ -20,6 +20,16 @@
 #include "darknet_ros_msgs/BoundingBoxes.h"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "sensor_msgs/CameraInfo.h"
+#include "geometry_msgs/Twist.h"
+
+#include <iostream>
+#include <chrono>
+
+#include <message_filters/subscriber.h>
+#include <message_filters/time_synchronizer.h>
+#include <message_filters/sync_policies/approximate_time.h>
+
 #include "string"
 
 namespace speech
@@ -29,7 +39,7 @@ class DetectSeat : public BT::ActionNodeBase
   public:
     explicit DetectSeat(const std::string& name);
 
-    void callback_chair(const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
+    void callback_chair(const sensor_msgs::CameraInfoConstPtr& cinf, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
     void halt();
 
@@ -37,8 +47,20 @@ class DetectSeat : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
+    message_filters::Subscriber<sensor_msgs::CameraInfo> cinf_sub_;
+    message_filters::Subscriber<darknet_ros_msgs::BoundingBoxes> bbx_sub_;
+
+    typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, darknet_ros_msgs::BoundingBoxes> MySyncPolicy_bbx;
+    message_filters::Synchronizer<MySyncPolicy_bbx> sync_bbx_;
+    
+    geometry_msgs::Twist twist;
+    ros::Publisher pub_;
     int count_;
     bool detected_;
+    bool positioned_;
+    int dir_;
+    bool firsttick_;
+    ros::Time initTime_;
 };
 };  // namespace speech
 
