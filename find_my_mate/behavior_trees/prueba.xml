@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <Repeat num_cycles="7">
+            <SequenceStar>
+                <Timeout msec="4000">
+                    <Action ID="SendPoint" point="{point}"/>
+                </Timeout>
+                <Action ID="GoPoint" point="{point}"/>
+            </SequenceStar>
+        </Repeat>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="GoPoint">
+            <input_port name="{point}" type="find_my_mate::PointTF"/>
+        </Action>
+        <Action ID="SendPoint">
+            <output_port name="{point}" type="find_my_mate::PointTF"/>
+        </Action>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+

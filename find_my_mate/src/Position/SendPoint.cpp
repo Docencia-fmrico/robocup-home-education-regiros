@@ -14,45 +14,51 @@
 
 #include <string>
 
-#include "robocup_home_education/SendPoint.h"
-#include "robocup_home_education/str_followobj.h"
+#include "find_my_mate/SendPoint.h"
+#include "find_my_mate/str_followobj.h"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
 #include "ros/ros.h"
 
-namespace robocup_home_education
+namespace find_my_mate
 {
   Transmitter::Transmitter(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config)
   {
+    ind_pos = 0;
   }
-
+  
   void
   Transmitter::halt()
   {
     ROS_INFO("Transmitter halt");
   }
 
+
+
   BT::NodeStatus
   Transmitter::tick()
   {
-    //3,308, 1,910, 0,000
-    //4,255, 2,625
-    //Poner punto donde se encuentra el arbitro, servirá para ida y vuelta
+    ROS_INFO("ENVIO PUNTOS DEL ARRAY %d", ind_pos);
     p_tf.x = posiciones[ind_pos][0];
     p_tf.y = posiciones[ind_pos][1];
     p_tf.z = posiciones[ind_pos][2];
+    p_tf.or_x = orientaciones[ind_pos][0];
+    p_tf.or_y = orientaciones[ind_pos][1];
+    p_tf.or_z = orientaciones[ind_pos][2];
+    p_tf.or_w = orientaciones[ind_pos][3];
+    ind_pos++;
     
     BT::TreeNode::setOutput("point", p_tf);
       
     return BT::NodeStatus::SUCCESS;
   }
-} //namespace robocup_home_education
+} //namespace find_my_mate
 
 
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<robocup_home_education::Transmitter>("SendPoint");
+  factory.registerNodeType<find_my_mate::Transmitter>("SendPoint");
 }

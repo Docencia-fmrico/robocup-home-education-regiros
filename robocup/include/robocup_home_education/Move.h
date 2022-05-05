@@ -29,7 +29,15 @@
 
 #include <actionlib/client/simple_action_client.h>
 #include <string>
-//typedef actionlib::SimpleActionClient<> Client;
+
+#include "tf2/transform_datatypes.h"
+#include "tf2_ros/transform_listener.h"
+#include "tf2/LinearMath/Transform.h"
+#include "geometry_msgs/TransformStamped.h"
+#include "tf2_geometry_msgs/tf2_geometry_msgs.h"
+#include "tf2/convert.h"
+#include "geometry_msgs/Point.h"
+#include "msgs/pos_person.h"
 
 namespace robocup_home_education
 {
@@ -58,15 +66,15 @@ class Move : public BTNavAction
     ros::NodeHandle n;
 
     
-    ros::ServiceClient Client; //
+    ros::ServiceClient Client;
     geometry_msgs::PoseStamped start;
     geometry_msgs::PoseStamped goal;
-    //geometry_msgs::PoseStamped path_[5575775757];
 
     navfn::MakeNavPlan srv;
 
     //Client ac;
-
+    tf2_ros::Buffer buffer;
+    tf2_ros::TransformListener listener;
     int counter_;
     PointTF p;
 };

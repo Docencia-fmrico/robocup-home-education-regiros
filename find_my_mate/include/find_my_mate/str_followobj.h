@@ -12,17 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROBOCUP_HOME_EDUCATION_STR_FOLLOWOBJ_H
-#define ROBOCUP_HOME_EDUCATION_STR_FOLLOWOBJ_H
+#ifndef FIND_MY_MATE_STR_FOLLOWOBJ_H
+#define FIND_MY_MATE_STR_FOLLOWOBJ_H
 
 
-namespace robocup_home_education {
+namespace find_my_mate {
 
     struct PointTF{
         double x;
         double y;
         double z;
         double dist;
+        double or_x;
+        double or_y;
+        double or_z;
+        double or_w;
     };
     
     typedef struct PointTF PointTF;

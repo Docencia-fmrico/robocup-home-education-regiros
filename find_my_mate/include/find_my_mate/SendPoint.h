@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef ROBOCUP_HOME_EDUCATION_SENDPOINT_H
-#define ROBOCUP_HOME_EDUCATION_SENDPOINT_H
+#ifndef FIND_MY_MATE_SENDPOINT_H
+#define FIND_MY_MATE_SENDPOINT_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
 
-#include "robocup_home_education/str_followobj.h"
+#include "find_my_mate/str_followobj.h"
 
 #include "ros/ros.h"
 
-namespace robocup_home_education
+namespace find_my_mate
 {
 
 class Transmitter : public BT::ActionNodeBase
@@ -42,14 +42,18 @@ public:
 private:
   ros::NodeHandle nh_;
 
-  static int ind_pos;
-  static int vuelta;
-    
-  float posiciones[3][3] = {{3,3,0}, {5,4,0}, {6,2,0}};
+  int ind_pos;
+  int vuelta;
+  //(2,815, 0,153, 0,000), Orientation(0,000, 0,000, -0,012, 1,000)
+    //(4,218, 2,385, 0,000), Orientation(0,000, 0,000, 0,287, 0,958)
+    //(6,115, 3,589, 0,000), Orientation(0,000, 0,000, -0,096, 0,995)
+
+  float posiciones[7][3] = {{2.243,6.359,0.0}, {0.427,6.354,0.0}, {0.188,5.898,0.0}, {0.759,3.458,0.0}, {-0.128,4.162,0.0}, {2.295,3.182,0.0}, {3.891,-0.454,0.0}};
+  float orientaciones[7][4] = {{0.0,0.0,0.701, 0.713}, {0.0,0.0,0.861,0.509}, {0.0,0.0,0.999, 0.053}, {0.0,0.0,-0.944, 0.330}, {0.0,0.0,-0.787,0.617}, {0.0,0.0,-0.009, 1.0}};
 
   PointTF p_tf;
 };
 
-} // namespace robocup_home_education
+} // namespace find_my_mate
 
-#endif  // ROBOCUP_HOME_EDUCATION_SENDO_POINT_H
+#endif  // FIND_MY_MATE_SENDPOINT_H
