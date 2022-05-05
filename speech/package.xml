@@ -5,7 +5,7 @@
   <description>The speech package</description>
 
   <maintainer email="jm.valverde.2020@alumnos.urjc.es">Juan Miguel Valverde Garcia</maintainer>
-  <license>BSD</license>
+  <license>Apache 2</license>
 
   <!-- The *depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
@@ -36,6 +36,8 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
 
   <buildtool_depend>catkin</buildtool_depend>
+
+
   <build_depend>actionlib</build_depend>
   <build_depend>actionlib_msgs</build_depend>
   <build_depend>dialogflow_ros_msgs</build_depend>
@@ -70,8 +72,6 @@
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>std_srvs</exec_depend>
   <exec_depend>behaviortree_cpp_v3</exec_depend>
-
-
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
