@@ -23,6 +23,7 @@ namespace find_my_mate
     private:
       ros::NodeHandle nh_;
       ros::Subscriber sub_param_;
+      bool firsttick_;
       bool getparam_ ; 
 };
 } //  find_my_mate

@@ -9,6 +9,7 @@ namespace find_my_mate
   Starting::Starting(const std::string& name)
   : BT::ActionNodeBase(name, {}),
     nh_("~"),
+    firsttick_(true);
     getparam_(false)
   {
     sub_param_ = nh_.subscribe("/speech/param", 1, &Starting::StartingCallback, this);
@@ -23,17 +24,20 @@ namespace find_my_mate
   BT::NodeStatus
   Starting::tick()
   {
-    find_my_mate::Chat forwarder;
-
-    forwarder.speak("Avoid error");
-    forwarder.speak("I'm ready, tell me when you want me to start");
-
-    forwarder.listen();
 
     if (getparam_){
       getparam_ = false;
+      firsttick_ = true;
       return BT::NodeStatus::SUCCESS;
     } else {
+      if (firsttick_){
+        find_my_mate::Chat forwarder;
+        forwarder.speak("Avoid error");
+        forwarder.speak("I'm ready, tell me when you want me to start");
+        forwarder.listen();
+        firsttick_ = false;
+      }
+
       return BT::NodeStatus::RUNNING;
     }
 
