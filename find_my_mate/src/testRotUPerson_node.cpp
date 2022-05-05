@@ -38,7 +38,7 @@ class RotUPerson
     void callback_bbx(const sensor_msgs::CameraInfoConstPtr& cinf, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
     {
         for (const auto & box : boxes->bounding_boxes) {
-            if (box.Class == "person"){
+            if (box.Class == "person" && box.probability > 0.6){
                 ROS_INFO("person detected");
                 int px = (box.xmax + box.xmin) / 2;
                 if (px > cinf->width/2 - cinf->width/8 && px < cinf->width/2 + cinf->width/8 ){
@@ -96,9 +96,9 @@ main(int argc, char** argv)
             RUP.positioned_ = false;
             RUP.pub_.publish(RUP.twist);
             return 0;
-        } else if ((ros::Time::now() - initTime_).sec <= 5){
+        } else if ((ros::Time::now() - initTime_).sec <= 10){
             ROS_INFO("rotate");
-            RUP.twist.angular.z=0.1*RUP.dir_;
+            RUP.twist.angular.z=0.45*RUP.dir_;
             RUP.twist.linear.x=0;
             RUP.pub_.publish(RUP.twist);
         } else {
