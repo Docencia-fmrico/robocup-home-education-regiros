@@ -41,4 +41,4 @@ class Description : public BT::ActionNodeBase
 };
 }  // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_ASKNAME_H
+#endif  // FIND_MY_MATE_DESCRIPTION_H
