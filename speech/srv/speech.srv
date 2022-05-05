@@ -1,0 +1,4 @@
+bool action
+string speak_text
+---
+string params

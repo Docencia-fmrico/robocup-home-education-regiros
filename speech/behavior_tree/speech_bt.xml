@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <SequenceStar name="Main">
+            <Action ID="Start"/>
+            <Repeat num_cycles="2">
+                <Sequence>
+                    <Action ID="Move" name="Move to entry"/>
+                    <Sequence name="Person">
+                        <Action ID="AskName" Info="{info}"/>
+                        <Action ID="AskDrink" Info="{info}"/>
+                    </Sequence>
+                    <Sequence name="Seat">
+                        <Action ID="Move" name="Move to seats"/>
+                        <Action ID="DetectSeat"/>
+                        <Action ID="AskAge" Info="{info}"/>
+                        <Action ID="OfferSeat" Info="{info}"/>
+                    </Sequence>
+                    <Sequence name="Report Person">
+                        <Action ID="Move" name="Move to referee"/>
+                        <Action ID="SayInfo" Info="{info}"/>
+                    </Sequence>
+                </Sequence>
+            </Repeat>
+        </SequenceStar>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="AskAge">
+            <inout_port default="{info}" name="Info"/>
+        </Action>
+        <Action ID="AskDrink">
+            <inout_port name="Info"/>
+        </Action>
+        <Action ID="AskName">
+            <inout_port name="Info"/>
+        </Action>
+        <Action ID="DetectSeat"/>
+        <Action ID="Move"/>
+        <Action ID="OfferSeat">
+            <input_port default="{info}" name="Info"/>
+        </Action>
+        <Action ID="SayInfo">
+            <input_port default="{info}" name="Info"/>
+        </Action>
+        <Action ID="Start"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
