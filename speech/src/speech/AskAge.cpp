@@ -1,30 +1,27 @@
-#include "speech/AskDrink.h"
-#include "speech/Chat.cpp"
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "ros/ros.h"
-
+#include "speech/AskAge.h"
 
 namespace speech
 {
-  AskDrink::AskDrink(const std::string& name, const BT::NodeConfiguration& config)
+  AskAge::AskAge(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
     nh_("~"),
   {}
 
   void
-  AskDrink::halt()
+  AskAge::halt()
   {
-    ROS_INFO("AskDrink halt");
+    ROS_INFO("AskAge halt");
   }
 
   BT::NodeStatus
-  AskDrink::tick()
+  AskAge::tick()
   {
     Chat forwarder;
     ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
+    PInfo info_;
 
     forwarder.speak("Avoid error");
-    forwarder.speak("I'm ready, tell me when you want me to start");
+    forwarder.speak("How old are you?");
 
     forwarder.listen();
 
@@ -33,10 +30,16 @@ namespace speech
   }
 
   BT::NodeStatus
-  AskDrink::drinkCallback(const std_msgs::StringConstPtr& msg)
+  AskAge::ageCallback(const std_msgs::StringConstPtr& msg)
   {
+    int age;
     ROS_INFO("PARAMETRO: %s", msg->data.c_str());
-    BT::TreeNode::setOutput("FavDrink", msg->data);
+    age = stoi(msg->data);
+    BT::TreeNode::getInput("Info", info_);
+    if (age >= 50) {
+      info_.old = true;
+    }
+    BT::TreeNode::setOutput("Info", info_);
     return BT::NodeStatus::SUCCESS;
   }
 
@@ -45,5 +48,5 @@ namespace speech
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<speech::AskDrink>("AskDrink");
+  factory.registerNodeType<speech::AskAge>("AskAge");
 }

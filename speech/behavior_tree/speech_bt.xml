@@ -8,18 +8,18 @@
                 <Sequence>
                     <Action ID="Move" name="Move to entry"/>
                     <Sequence name="Person">
-                        <Action ID="AskName" Name="{info}"/>
-                        <Action FavDrink="{info}" ID="AskDrink"/>
+                        <Action ID="AskName" Info="{info}"/>
+                        <Action ID="AskDrink" Info="{info}"/>
                     </Sequence>
                     <Sequence name="Seat">
-                        <Action ID="Move"/>
+                        <Action ID="Move" name="Move to seats"/>
                         <Action ID="DetectSeat"/>
-                        <Action ID="AskOld"/>
-                        <Action ID="OfferSeat"/>
+                        <Action ID="AskAge" Info="{info}"/>
+                        <Action ID="OfferSeat" Info="{info}"/>
                     </Sequence>
                     <Sequence name="Report Person">
-                        <Action ID="Move"/>
-                        <Action ID="SayInfo" ReceiveInfo="{info}"/>
+                        <Action ID="Move" name="Move to referee"/>
+                        <Action ID="SayInfo" Info="{info}"/>
                     </Sequence>
                 </Sequence>
             </Repeat>
@@ -27,18 +27,22 @@
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
+        <Action ID="AskAge">
+            <inout_port default="{info}" name="Info"/>
+        </Action>
         <Action ID="AskDrink">
-            <output_port name="FavDrink"/>
+            <inout_port name="Info"/>
         </Action>
         <Action ID="AskName">
-            <output_port name="Name"/>
+            <inout_port name="Info"/>
         </Action>
-        <Action ID="AskOld"/>
         <Action ID="DetectSeat"/>
         <Action ID="Move"/>
-        <Action ID="OfferSeat"/>
+        <Action ID="OfferSeat">
+            <input_port default="{info}" name="Info"/>
+        </Action>
         <Action ID="SayInfo">
-            <input_port default="{info}" name="ReceiveInfo"/>
+            <input_port default="{info}" name="Info"/>
         </Action>
         <Action ID="Start"/>
     </TreeNodesModel>

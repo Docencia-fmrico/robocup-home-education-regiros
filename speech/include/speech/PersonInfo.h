@@ -7,7 +7,7 @@ namespace speech {
 
     struct personInfo{
         std::string name;
-        std::string favDrink;
+        std::string drink;
         bool Old; 
     };
 

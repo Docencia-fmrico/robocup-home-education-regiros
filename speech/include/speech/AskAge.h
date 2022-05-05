@@ -1,5 +1,5 @@
-#ifndef SPEECH_ASKNAME_H
-#define SPEECH_ASKNAME_H
+#ifndef SPEECH_ASKAGE_H
+#define SPEECH_ASKAGE_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
@@ -12,16 +12,16 @@
 
 namespace speech
 {
-class AskName : public BT::ActionNodeBase
+class AskAge : public BT::ActionNodeBase
 {
   public:
-    explicit AskName(const std::string& name, const BT::NodeConfiguration& config);
+    explicit AskAge(const std::string& name, const BT::NodeConfiguration& config);
 
     void halt();
 
     BT::NodeStatus tick();
 
-    void nameCallback(const std_msgs::StringConstPtr& msg);
+    void ageCallback(const std_msgs::StringConstPtr& msg);
 
     static PortsList providedPorts()
     {
@@ -35,4 +35,4 @@ class AskName : public BT::ActionNodeBase
 };
 }; //  namespace speech
 
-#endif  // ASKNAME_H
+#endif  // ASKAGE_H

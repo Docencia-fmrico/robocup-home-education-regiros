@@ -19,6 +19,7 @@ class Chat : public gb_dialog::DialogInterface
       this->registerCallback(std::bind(&Chat::startCB, this, ph::_1), "Start");
       this->registerCallback(std::bind(&Chat::askNameCB, this, ph::_1), "Ask Name");
       this->registerCallback(std::bind(&Chat::askDrinkCB, this, ph::_1), "Ask Drink");
+      this->registerCallback(std::bind(&Chat::askAgeCB, this, ph::_1), "Ask Age");
 
     }
 
@@ -89,6 +90,28 @@ class Chat : public gb_dialog::DialogInterface
       }
       else {
         pub_param_.publish(name);
+      }
+    }
+
+    void 
+    askAgeCB(dialogflow_ros_msgs::DialogflowResult result)
+    {
+      std_msgs::String age;
+
+      for (const auto & param : result.parameters) {
+        for (const auto & value : param.value) {
+          age.data = value;
+        }
+      }
+
+      ROS_INFO("askAgeCB: intent [%s]", result.intent.c_str());
+ 
+      speak(result.fulfillment_text);
+      if (age.data.empty()) {
+        listen();
+      }
+      else {
+        pub_param_.publish(age);
       }
     }
 

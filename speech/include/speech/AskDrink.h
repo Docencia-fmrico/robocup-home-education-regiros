@@ -5,6 +5,9 @@
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "speech/PersonInfo.h"
+#include "speech/Chat.cpp"
+
 
 namespace speech
 {
@@ -21,9 +24,13 @@ class AskDrink : public BT::ActionNodeBase
 
     static PortsList providedPorts()
     {
-        return { OutputPort<PInfo>("FavDrink") };
+      return { BidirectionalPort<PInfo>("Info")};
     }
-    
+  
+  private:
+    Chat forwarder;
+    PInfo info_;
+    ros::NodeHandle nh_;
 };
 }; //  namespace speech
 
