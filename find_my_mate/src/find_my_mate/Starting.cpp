@@ -33,10 +33,9 @@ namespace find_my_mate
     if (getparam_){
       getparam_ = false;
       return BT::NodeStatus::SUCCESS;
-    } else {
-      return BT::NodeStatus::RUNNING;
     }
 
+    return BT::NodeStatus::RUNNING;
   }
 
   void

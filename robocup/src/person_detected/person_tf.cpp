@@ -11,41 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-/*
-#include <opencv2/core/types.hpp>
 
-#include <string>
-
-#include <message_filters/subscriber.h>
-#include <message_filters/time_synchronizer.h>
-#include <message_filters/sync_policies/approximate_time.h>
-
-#include <pcl/point_types.h>
-#include <pcl/conversions.h>
-#include <pcl/common/transforms.h>
-#include <pcl/filters/passthrough.h>
-#include <pcl/filters/voxel_grid.h>
-#include <pcl_conversions/pcl_conversions.h>
-#include <pcl/octree/octree_search.h>
-#include <pcl/octree/octree.h>
-#include <pcl/io/ply_io.h>
-#include <pcl_ros/transforms.h>
-
-#include <cv_bridge/cv_bridge.h>
-
-#include <sensor_msgs/Image.h>
-#include <darknet_ros_msgs/BoundingBoxes.h>
-#include <std_msgs/Float32.h>
-#include <sensor_msgs/PointCloud2.h>
-
-#include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
-#include <tf/message_filter.h>
-#include <message_filters/subscriber.h>
-#include <boost/algorithm/string.hpp>
-#include "msgs/pos_person.h"
-#include "ros/ros.h"
-*/
 #include "robocup_home_education/person_detected/person_tf.h"
 
 namespace robocup_home_education

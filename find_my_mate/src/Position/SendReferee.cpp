@@ -14,7 +14,7 @@
 
 #include <string>
 
-#include "find_my_mate/SendPoint.h"
+#include "find_my_mate/SendReferee.h"
 #include "find_my_mate/str_followobj.h"
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
@@ -23,34 +23,30 @@
 
 namespace find_my_mate
 {
-  Transmitter::Transmitter(const std::string& name, const BT::NodeConfiguration& config)
+  Referee::Referee(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config)
   {
-    ind_pos = 0;
   }
   
   void
-  Transmitter::halt()
+  Referee::halt()
   {
     ROS_INFO("Transmitter halt");
   }
 
   BT::NodeStatus
-  Transmitter::tick()
+  Referee::tick()
   {
-    ROS_INFO("ENVIO PUNTOS DEL ARRAY %d", ind_pos);
-    p_tf.x = posiciones[ind_pos][0];
-    p_tf.y = posiciones[ind_pos][1];
-    p_tf.z = posiciones[ind_pos][2];
-    p_tf.or_x = orientaciones[ind_pos][0];
-    p_tf.or_y = orientaciones[ind_pos][1];
-    p_tf.or_z = orientaciones[ind_pos][2];
-    p_tf.or_w = orientaciones[ind_pos][3];
-    ind_pos++;
-
-    if(ind_pos == 6) {
-      ind_pos = 0;
-    }
+    ROS_INFO("ENVIO PUNTOS DEL ARBITRO");
+    //{3.891,-0.454,0.0}
+    p_tf.x = 3.891;
+    p_tf.y = -0.454;
+    p_tf.z = 0.0;
+    //{0.0,0.0,-0.009, 1.0}
+    p_tf.or_x = 0.0;
+    p_tf.or_y = 0.0;
+    p_tf.or_z = -0.9;
+    p_tf.or_w = 1.0;
     
     BT::TreeNode::setOutput("point", p_tf);
       
@@ -62,5 +58,5 @@ namespace find_my_mate
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<find_my_mate::Transmitter>("SendPoint");
+  factory.registerNodeType<find_my_mate::Referee>("GoReferee");
 }

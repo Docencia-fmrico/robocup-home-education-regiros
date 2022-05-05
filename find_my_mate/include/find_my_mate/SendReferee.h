@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FIND_MY_MATE_SENDPOINT_H
-#define FIND_MY_MATE_SENDPOINT_H
+#ifndef FIND_MY_MATE_SENDREFEREE_H
+#define FIND_MY_MATE_SENDREFEREE_H
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
@@ -25,10 +25,10 @@
 namespace find_my_mate
 {
 
-class Transmitter : public BT::ActionNodeBase
+class Referee : public BT::ActionNodeBase
 {
 public:
-  explicit Transmitter(const std::string& name, const BT::NodeConfiguration& config);
+  explicit Referee(const std::string& name, const BT::NodeConfiguration& config);
 
   void halt();
 
@@ -42,15 +42,9 @@ public:
 private:
   ros::NodeHandle nh_;
 
-  int ind_pos;
-  int vuelta;
-
-  float posiciones[6][3] = {{2.243,6.359,0.0}, {0.427,6.354,0.0}, {0.188,5.898,0.0}, {0.759,3.458,0.0}, {-0.128,4.162,0.0}, {2.295,3.182,0.0}};
-  float orientaciones[6][4] = {{0.0,0.0,0.701, 0.713}, {0.0,0.0,0.861,0.509}, {0.0,0.0,0.999, 0.053}, {0.0,0.0,-0.944, 0.330}, {0.0,0.0,0.0,1.0}};
-
   PointTF p_tf;
 };
 
 } // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_SENDPOINT_H
+#endif  // FIND_MY_MATE_SENDREFEREE_H

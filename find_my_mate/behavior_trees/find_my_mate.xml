@@ -6,16 +6,18 @@
             <Action ID="Starting"/>
             <Repeat num_cycles="3">
                 <SequenceStar>
+                    <Sequence>
+                        <Action ID="SendPoint" point="{point}"/>
+                        <Action ID="GoPoint" point="{point}"/>
+                        <Action ID="RotateUPerson"/>
+                    </Sequence>
+                    <Action ID="GetInfo" info="{info}"/>
                     <SequenceStar>
-                        <Action ID="GoPosition"/>
+                        <Action ID="GoReferee" point="{point}"/>
+                        <Action ID="GoPoint" point="{point}"/>
                         <Action ID="RotateUPerson"/>
                     </SequenceStar>
-                    <Action ID="GetInfo" {info}=""/>
-                    <SequenceStar>
-                        <Action ID="GoPosition"/>
-                        <Action ID="RotateUPerson"/>
-                    </SequenceStar>
-                    <Action ID="Description" {info}=""/>
+                    <Action ID="Description" info="{info}"/>
                 </SequenceStar>
             </Repeat>
         </SequenceStar>
@@ -28,8 +30,16 @@
         <Action ID="GetInfo">
             <output_port name="{info}">info of person</output_port>
         </Action>
-        <Action ID="GoPosition"/>
+        <Action ID="GoPoint">
+            <input_port name="{point}"/>
+        </Action>
+        <Action ID="GoReferee">
+            <output_port name="{point}"/>
+        </Action>
         <Action ID="RotateUPerson"/>
+        <Action ID="SendPoint">
+            <output_port name="{point}"/>
+        </Action>
         <Action ID="Starting"/>
     </TreeNodesModel>
     <!-- ////////// -->
