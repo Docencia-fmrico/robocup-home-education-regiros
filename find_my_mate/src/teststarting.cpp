@@ -1,6 +1,6 @@
 #include "ros/ros.h"
-#include "find_my_mate/Start.h"
-#include "find_my_mate/Chat.cpp"
+#include "find_my_mate/Starting.h"
+#include "find_my_mate/Chat.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include <string>
 #include <sstream>
@@ -17,14 +17,14 @@ namespace find_my_mate
 int
   main(int argc, char** argv) 
   {
-    ros::init(argc, argv, "starttest_node");
+    ros::init(argc, argv, "startingtest_node");
     std::string name = "Jhon";
     std::string color = "Blue";
     std::string object = "Bottle";
     std::ostringstream oss;
     std::string phrase;
 
-    speech::Chat forwarder;
+    find_my_mate::Chat forwarder ;
     //ros::NodeHandle nh_;
     //ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, find_my_mate::messageCallback);
 

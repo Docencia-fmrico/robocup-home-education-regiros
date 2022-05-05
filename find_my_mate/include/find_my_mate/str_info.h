@@ -5,7 +5,7 @@
 
 #include "string"
 
-namespace visual_behavior {
+namespace find_my_mate {
 
     struct Info_of_person{
         std::string color;

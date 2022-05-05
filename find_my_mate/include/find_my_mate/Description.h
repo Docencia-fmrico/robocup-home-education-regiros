@@ -9,12 +9,12 @@
 #include "behaviortree_cpp_v3/bt_factory.h"
 #include "color_filter/colorpart.h"
 #include "find_my_mate/str_info.h"
+#include "find_my_mate/Chat.h"
 
 
 #include "ros/ros.h"
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <std_msgs/Float32.h>
 
 namespace find_my_mate
 {
@@ -27,8 +27,6 @@ class Description : public BT::ActionNodeBase
 
     BT::NodeStatus tick();
 
-    void callback(const color_filter::colorpartConstPtr& clrpart);//callback si se necesita
-
     static BT::PortsList providedPorts()
     {
       return { BT::InputPort<Infop>("info")}; //cambia el tipo que salga
@@ -36,9 +34,7 @@ class Description : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    bool firstick;
-    bool detected;
-    Speech::Chat forwarder;
+    find_my_mate::Chat forwarder;
     Infop info_;
     
 };

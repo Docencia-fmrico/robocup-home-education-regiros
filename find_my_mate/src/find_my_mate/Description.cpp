@@ -5,11 +5,12 @@ namespace find_my_mate
 
   Description::Description(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
-      nh_("~"),
-    {}
+    nh_("~")
+  {}
 
-  void 
-  Description::halt();
+
+  void
+  Description::halt()
   {
     ROS_INFO("Description halt");
   }
@@ -29,3 +30,9 @@ namespace find_my_mate
   }
 
 }  // namespace find_my_mate
+
+#include "behaviortree_cpp_v3/bt_factory.h"
+BT_REGISTER_NODES(factory)
+{
+  factory.registerNodeType<find_my_mate::Description>("Description");
+}

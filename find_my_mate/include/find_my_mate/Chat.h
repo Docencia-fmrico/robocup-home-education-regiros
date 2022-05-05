@@ -12,32 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FIND_MY_MATE_START_H
-#define FIND_MY_MATE_START_H
+#ifndef FIND_MY_MATE_CHAT_H
+#define FIND_MY_MATE_CHAT_H
 
-#include "behaviortree_cpp_v3/behavior_tree.h"
-#include "behaviortree_cpp_v3/bt_factory.h"
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-#include "find_my_mate/Chat.h"
+#include <gb_dialog/DialogInterface.h>
 #include <string>
+#include "std_msgs/String.h"
+
+namespace ph = std::placeholders;
 
 namespace find_my_mate
 {
-class Start : public BT::ActionNodeBase
+class Chat : public gb_dialog::DialogInterface
 {
   public:
-    explicit Start(const std::string& name);
+    Chat();
 
-    void halt();
+    void noIntentCB(dialogflow_ros_msgs::DialogflowResult result);
 
-    BT::NodeStatus tick();
+    void startCB(dialogflow_ros_msgs::DialogflowResult result);
 
+    void askNameCB(dialogflow_ros_msgs::DialogflowResult result);
+
+    bool done_;
+    std::string param_;
+    std::string response_;
   private:
-    Chat forwarder;
     ros::NodeHandle nh_;
-    bool firsttick_ = true;
 };
 };  // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_START_H
+#endif  // FIND_MY_MATE_CHAT_H

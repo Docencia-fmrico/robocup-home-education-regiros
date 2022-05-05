@@ -3,7 +3,7 @@
     <!-- ////////// -->
     <BehaviorTree ID="find_my_mate_bt">
         <SequenceStar>
-            <Action ID="Start"/>
+            <Action ID="Starting"/>
             <Repeat num_cycles="3">
                 <SequenceStar>
                     <SequenceStar>
@@ -30,7 +30,7 @@
         </Action>
         <Action ID="GoPosition"/>
         <Action ID="RotateUPerson"/>
-        <Action ID="Start"/>
+        <Action ID="Starting"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>
