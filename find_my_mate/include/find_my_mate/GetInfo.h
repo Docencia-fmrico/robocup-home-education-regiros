@@ -1,5 +1,5 @@
-#ifndef FIND_MY_MATE_GetInfo_H
-#define FIND_MY_MATE_GetInfo_H
+#ifndef FIND_MY_MATE_GETINFO_H
+#define FIND_MY_MATE_GETINFO_H
 
 #include "string"
 
@@ -9,11 +9,11 @@
 #include "darknet_ros_msgs/BoundingBoxes.h"
 #include "color_filter/colorpart.h"
 #include "find_my_mate/str_info.h"
+#include "find_my_mate/Chat.h"
+
 
 #include "ros/ros.h"
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <std_msgs/Float32.h>
 
 namespace find_my_mate
@@ -31,6 +31,8 @@ class GetInfo : public BT::ActionNodeBase
 
     void callback_obj(const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
+    void callback_name(const std_msgs::StringConstPtr& msg);
+
     static BT::PortsList providedPorts()
     {
       return { BT::OutputPort<Infop>("info")};
@@ -38,7 +40,10 @@ class GetInfo : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    ros::Subscriber sub_;
+    ros::Subscriber sub_clr_;
+    ros::Subscriber sub_obj_;
+    ros::Subscriber sub_name_;
+    find_my_mate::Chat forwarder;
     Infop info_;
     bool firsttick_;
     bool detectedclr_;
@@ -48,4 +53,4 @@ class GetInfo : public BT::ActionNodeBase
 };
 }  // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_GetInfo_H
+#endif  // FIND_MY_MATE_GETINFO_H

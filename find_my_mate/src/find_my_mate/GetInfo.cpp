@@ -17,6 +17,8 @@
 #include "find_my_mate/GetInfo.h"
 #include "find_my_mate/str_info.h"
 #include "color_filter/colorpart.h"
+#include "find_my_mate/Chat.h"
+
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
@@ -27,13 +29,16 @@ namespace find_my_mate
   GetInfo::GetInfo(const std::string& name, const BT::NodeConfiguration & config)
   : BT::ActionNodeBase(name, config),
     nh_("~"),
-    sub_clr_(nh_, "/rgbcolor/colorpart", 1),
-    sub_obj_(nh_, "/darknet_ros/bounding_boxes", 1),
     firsttick_(true),
     detectedclr_(false),
     detectedname_(false),
-    detectedobj_(false),
-  {}
+    detectedobj_(false)
+  { 
+    sub_clr_ = nh_.subscribe("/rgbcolor/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
+    sub_obj_ = nh_.subscribe("/darknet_ros/bounding_boxes", 1, &GetInfo::callback_obj, this ) ;
+    sub_name_ = nh_.subscribe("/speech/param", 1, &GetInfo::callback_name, this );
+
+  }
 
   void
   GetInfo::halt()
@@ -50,13 +55,21 @@ namespace find_my_mate
   }
 
   void
+  GetInfo::callback_name(const std_msgs::StringConstPtr& msg)
+  {
+    ROS_INFO("PARAMETRO: %s", msg->data.c_str());
+    info_.name = msg->data;
+    detectedname_=true;
+  }
+
+  void
   GetInfo::callback_obj(const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
   { 
     for (const auto & box : boxes->bounding_boxes) {
         if (box.Class != "person"){
-            ROS_INFO("object");
-            info_.object = box.Class;
-            detectedobj_ = true;
+          ROS_INFO("object");
+          info_.object = box.Class;
+          detectedobj_ = true;
         }
     }
   }
@@ -66,20 +79,26 @@ namespace find_my_mate
   BT::NodeStatus
   GetInfo::tick()
   {
-    if (firsttick_){
-        ROS_INFO("speek");
-        //iniciar speech.
-        firsttick_=false;
-        detectedname_=true;
+    if (! detectedname_){
+      if (firsttick_) {
+        ROS_INFO("speak");
+        forwarder.speak("Avoid error");
+        forwarder.speak("What is your name?");
+      }
+
+      forwarder.listen();
+      firsttick_=false;
     }
 
 
     if (detectedclr_ && detectedname_ && detectedobj_)
     {
-      
-
         ROS_INFO("finishing");
         BT::TreeNode::setOutput("info", info_);
+        firsttick_ = true;
+        detectedclr_ = false;
+        detectedname_ = false;
+        detectedobj_ = false;
         return BT::NodeStatus::SUCCESS;
     }
     else
