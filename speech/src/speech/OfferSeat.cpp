@@ -4,7 +4,7 @@ namespace speech
 {
   OfferSeat::OfferSeat(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
-    nh_("~"),
+    nh_("~")
   {}
 
   void
@@ -20,7 +20,7 @@ namespace speech
 
     forwarder.speak("Avoid error");
 
-    if (info_.Old) {
+    if (info_.old) {
       forwarder.speak("Please sit in the sofa");
     }
     else {

@@ -5,8 +5,10 @@ namespace speech
 {
   AskDrink::AskDrink(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
-    nh_("~"),
-  {}
+    nh_("~")
+  {
+    sub_param = nh_.subscribe("/speech/param", 1, &AskDrink::drinkCallback, this);
+  }
 
   void
   AskDrink::halt()
@@ -17,27 +19,29 @@ namespace speech
   BT::NodeStatus
   AskDrink::tick()
   {
-    Chat forwarder;
-    ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
-    PInfo info_;
-
     forwarder.speak("Avoid error");
     forwarder.speak("What is your favourite drink?");
 
     forwarder.listen();
 
-    return BT::NodeStatus::RUNNING;
+    if (detected_){
+      detected_ = false;
+      return BT::NodeStatus::SUCCESS;
+    }
+    else {
+      return BT::NodeStatus::RUNNING;
+    }
 
   }
 
-  BT::NodeStatus
+  void
   AskDrink::drinkCallback(const std_msgs::StringConstPtr& msg)
   {
     ROS_INFO("PARAMETRO: %s", msg->data.c_str());
     BT::TreeNode::getInput("Info", info_);
     info_.drink;
     BT::TreeNode::setOutput("Info", info_);
-    return BT::NodeStatus::SUCCESS;
+    detected_ = true;
   }
 
 };  // namespace speech

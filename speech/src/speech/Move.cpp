@@ -2,9 +2,9 @@
 
 namespace speech
 {
-  Move::Move(const std::string& name, const BT::NodeConfiguration& config)
-  : BT::ActionNodeBase(name, config),
-    nh_("~"),
+  Move::Move(const std::string& name)
+  : BT::ActionNodeBase(name, {}),
+    nh_("~")
   {}
 
   void
@@ -18,8 +18,8 @@ namespace speech
   {
     int count_ = 0;
 
-    while (count < 10){
-      count++;
+    while (count_ < 10){
+      count_++;
       return BT::NodeStatus::RUNNING;
     }
 

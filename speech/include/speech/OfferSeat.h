@@ -6,7 +6,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "speech/PersonInfo.h"
-#include "speech/Chat.cpp"
+#include "speech/Chat.h"
 #include "string"
 
 namespace speech
@@ -20,9 +20,9 @@ class OfferSeat : public BT::ActionNodeBase
 
     BT::NodeStatus tick();
 
-    static PortsList providedPorts()
+    static BT::PortsList providedPorts()
     {
-      return {InputPort<PInfo>("Info")};
+      return {BT::InputPort<PInfo>("Info")};
     }
 
   private:

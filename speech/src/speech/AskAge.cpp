@@ -4,8 +4,10 @@ namespace speech
 {
   AskAge::AskAge(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
-    nh_("~"),
-  {}
+    nh_("~")
+  {
+    sub_param = nh_.subscribe("/speech/param", 1, &AskAge::ageCallback, this);
+  }
 
   void
   AskAge::halt()
@@ -16,20 +18,21 @@ namespace speech
   BT::NodeStatus
   AskAge::tick()
   {
-    Chat forwarder;
-    ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
-    PInfo info_;
-
     forwarder.speak("Avoid error");
     forwarder.speak("How old are you?");
 
     forwarder.listen();
 
-    return BT::NodeStatus::RUNNING;
-
+    if (detected_){
+      detected_ = false;
+      return BT::NodeStatus::SUCCESS;
+    }
+    else {
+      return BT::NodeStatus::RUNNING;
+    }
   }
 
-  BT::NodeStatus
+  void
   AskAge::ageCallback(const std_msgs::StringConstPtr& msg)
   {
     int age;
@@ -40,7 +43,7 @@ namespace speech
       info_.old = true;
     }
     BT::TreeNode::setOutput("Info", info_);
-    return BT::NodeStatus::SUCCESS;
+    detected_ = true;
   }
 
 };  // namespace speech

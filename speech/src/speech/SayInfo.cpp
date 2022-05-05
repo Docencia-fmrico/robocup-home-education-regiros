@@ -4,7 +4,7 @@ namespace speech
 {
   SayInfo::SayInfo(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
-    nh_("~"),
+    nh_("~")
   {}
 
   void

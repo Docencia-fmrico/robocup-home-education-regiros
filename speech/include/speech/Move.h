@@ -12,7 +12,7 @@ namespace speech
 class Move : public BT::ActionNodeBase
 {
   public:
-    explicit Move(const std::string& name, const BT::NodeConfiguration& config);
+    explicit Move(const std::string& name);
 
     void halt();
 

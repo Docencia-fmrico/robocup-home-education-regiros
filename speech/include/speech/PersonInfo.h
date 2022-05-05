@@ -8,7 +8,7 @@ namespace speech {
     struct personInfo{
         std::string name;
         std::string drink;
-        bool Old; 
+        bool old; 
     };
 
     typedef struct personInfo PInfo;

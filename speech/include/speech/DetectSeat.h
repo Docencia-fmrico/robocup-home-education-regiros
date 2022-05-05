@@ -12,7 +12,7 @@ namespace speech
 class DetectSeat : public BT::ActionNodeBase
 {
   public:
-    explicit DetectSeat(const std::string& name, const BT::NodeConfiguration& config);
+    explicit DetectSeat(const std::string& name);
 
     void halt();
 

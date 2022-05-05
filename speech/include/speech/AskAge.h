@@ -6,9 +6,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "speech/PersonInfo.h"
-#include "speech/Chat.cpp"
-
-
+#include "speech/Chat.h"
 
 namespace speech
 {
@@ -23,15 +21,17 @@ class AskAge : public BT::ActionNodeBase
 
     void ageCallback(const std_msgs::StringConstPtr& msg);
 
-    static PortsList providedPorts()
+    static BT::PortsList providedPorts()
     {
-      return {BidirectionalPort<PInfo>("Info")};
+      return {BT::BidirectionalPort<PInfo>("Info")};
     }
   
   private:
     Chat forwarder;
     PInfo info_;
     ros::NodeHandle nh_;
+    ros::Subscriber sub_param;
+    bool detected_;
 };
 }; //  namespace speech
 

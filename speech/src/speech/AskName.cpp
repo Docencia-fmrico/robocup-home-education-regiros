@@ -5,7 +5,10 @@ namespace speech
   AskName::AskName(const std::string& name, const BT::NodeConfiguration& config)
   : BT::ActionNodeBase(name, config),
     nh_("~"),
-  {}
+    detected_(false)
+  {
+    sub_param = nh_.subscribe("/speech/param", 1, &AskName::nameCallback, this);
+  }
 
   void
   AskName::halt()
@@ -16,26 +19,27 @@ namespace speech
   BT::NodeStatus
   AskName::tick()
   {
-    Chat forwarder;
-    ros::Subscriber sub_param = nh_.subscribe("/speech/param", 1, startCallback);
-    PInfo info_;
-
     forwarder.speak("Avoid error");
     forwarder.speak("What is your name?");
 
     forwarder.listen();
 
-    return BT::NodeStatus::RUNNING;
-
+    if (detected_){
+      detected_ = false;
+      return BT::NodeStatus::SUCCESS;
+    }
+    else {
+      return BT::NodeStatus::RUNNING;
+    }
   }
 
-  BT::NodeStatus
+  void
   AskName::nameCallback(const std_msgs::StringConstPtr& msg)
   {
     ROS_INFO("PARAMETRO: %s", msg->data.c_str());
     info_.name = msg->data;
     BT::TreeNode::setOutput("Info", info_);
-    return BT::NodeStatus::SUCCESS;
+    detected_ = true;
   }
 
 };  // namespace speech
