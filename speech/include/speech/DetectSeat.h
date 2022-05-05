@@ -17,6 +17,7 @@
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include "behaviortree_cpp_v3/bt_factory.h"
+#include "darknet_ros_msgs/BoundingBoxes.h"
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "string"
@@ -28,6 +29,8 @@ class DetectSeat : public BT::ActionNodeBase
   public:
     explicit DetectSeat(const std::string& name);
 
+    void callback_chair(const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
+
     void halt();
 
     BT::NodeStatus tick();
@@ -35,6 +38,7 @@ class DetectSeat : public BT::ActionNodeBase
   private:
     ros::NodeHandle nh_;
     int count_;
+    bool detected_;
 };
 };  // namespace speech
 
