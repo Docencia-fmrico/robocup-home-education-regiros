@@ -1,5 +1,5 @@
-#ifndef FIND_MY_MATE_GetInfo_H
-#define FIND_MY_MATE_GetInfo_H
+#ifndef FIND_MY_MATE_GETINFO_H
+#define FIND_MY_MATE_GETINFO_H
 
 #include "string"
 
@@ -12,8 +12,6 @@
 
 #include "ros/ros.h"
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <std_msgs/Float32.h>
 
 namespace find_my_mate
@@ -38,7 +36,8 @@ class GetInfo : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    ros::Subscriber sub_;
+    ros::Subscriber sub_clr_;
+    ros::Subscriber sub_obj_;
     Infop info_;
     bool firsttick_;
     bool detectedclr_;
@@ -48,4 +47,4 @@ class GetInfo : public BT::ActionNodeBase
 };
 }  // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_GetInfo_H
+#endif  // FIND_MY_MATE_GETINFO_H

@@ -10,8 +10,6 @@
 
 #include "ros/ros.h"
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 #include <std_msgs/Float32.h>
 
 namespace find_my_mate
@@ -34,7 +32,6 @@ class AskName : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    bool firstick;
     bool detected;
     
 };

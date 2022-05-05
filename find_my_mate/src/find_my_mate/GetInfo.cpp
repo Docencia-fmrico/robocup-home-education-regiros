@@ -27,13 +27,14 @@ namespace find_my_mate
   GetInfo::GetInfo(const std::string& name, const BT::NodeConfiguration & config)
   : BT::ActionNodeBase(name, config),
     nh_("~"),
-    sub_clr_(nh_, "/rgbcolor/colorpart", 1),
-    sub_obj_(nh_, "/darknet_ros/bounding_boxes", 1),
     firsttick_(true),
     detectedclr_(false),
     detectedname_(false),
-    detectedobj_(false),
-  {}
+    detectedobj_(false)
+  { 
+    sub_clr_ = nh_.subscribe("/rgbcolor/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
+    sub_obj_ = nh_.subscribe("/darknet_ros/bounding_boxes", 1, &GetInfo::callback_obj, this ) ;
+  }
 
   void
   GetInfo::halt()
@@ -54,9 +55,9 @@ namespace find_my_mate
   { 
     for (const auto & box : boxes->bounding_boxes) {
         if (box.Class != "person"){
-            ROS_INFO("object");
-            info_.object = box.Class;
-            detectedobj_ = true;
+          ROS_INFO("object");
+          info_.object = box.Class;
+          detectedobj_ = true;
         }
     }
   }
@@ -80,6 +81,10 @@ namespace find_my_mate
 
         ROS_INFO("finishing");
         BT::TreeNode::setOutput("info", info_);
+        firsttick_ = true;
+        detectedclr_ = false;
+        detectedname_ = false;
+        detectedobj_ = false;
         return BT::NodeStatus::SUCCESS;
     }
     else

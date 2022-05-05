@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(find_my_mate)
 
+find_package(ZMQ)
+if(ZMQ_FOUND)
+    message(STATUS "ZeroMQ found.")
+    add_definitions(-DZMQ_FOUND)
+else()
+  message(WARNING "ZeroMQ NOT found. Not including PublisherZMQ.")
+endif()
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -12,6 +19,10 @@ find_package(catkin REQUIRED COMPONENTS
   color_filter
   darknet_ros_msgs
   roscpp
+  sensor_msgs
+  std_msgs
+  geometry_msgs
+  message_filters
 )
 
 ## System dependencies are found with CMake's conventions
@@ -111,9 +122,14 @@ catkin_package(
   color_filter 
   darknet_ros_msgs 
   roscpp
+  std_msgs 
+  sensor_msgs
+  geometry_msgs
+  message_filters
 #  DEPENDS system_lib
 )
 
+find_package(BehaviorTreeV3)
 ###########
 ## Build ##
 ###########
@@ -121,7 +137,8 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
- include
+  include
+  ${ZMQ_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -129,7 +146,35 @@ include_directories(
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/find_my_mate.cpp
 # )
+add_library(asr_Description_bt_node SHARED src/find_my_mate/Description.cpp)
+target_link_libraries(asr_Description_bt_node find_my_mate)
 
+add_library(asr_GetInfo_bt_node SHARED src/find_my_mate/GetInfo.cpp)
+target_link_libraries(asr_GetInfo_bt_node find_my_mate)
+
+add_library(asr_GoPosition_bt_node SHARED src/find_my_mate/GoPosition.cpp)
+target_link_libraries(asr_GoPosition_bt_node find_my_mate)
+
+add_library(asr_RotateUPerson_bt_node SHARED src/find_my_mate/RotateUPerson.cpp)
+#target_link_libraries(asr_RotateUPerson_bt_node find_my_mate)
+
+list(APPEND plugin_libs
+  asr_RotateUPerson_bt_node
+  asr_GoPosition_bt_node
+  asr_GetInfo_bt_node
+  asr_Description_bt_node
+)
+
+foreach(bt_plugin ${plugin_libs})
+  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
+endforeach()
+
+add_executable(find_my_mate_node 
+  src/find_my_mate_node.cpp
+)
+
+target_link_libraries(find_my_mate_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
