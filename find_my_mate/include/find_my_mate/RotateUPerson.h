@@ -11,6 +11,9 @@
 #include "sensor_msgs/CameraInfo.h"
 #include "geometry_msgs/Twist.h"
 
+#include <iostream>
+#include <chrono>
+
 #include <message_filters/subscriber.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
@@ -41,7 +44,11 @@ class RotateUPerson : public BT::ActionNodeBase
     geometry_msgs::Twist twist;
     ros::Publisher pub_;
 
+    bool firsttick_;
     bool positioned_;
+    int dir_;
+    ros::Time initTime_;
+
     
 };
 }  // namespace find_my_mate

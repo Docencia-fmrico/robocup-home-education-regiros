@@ -17,6 +17,8 @@
 #include "find_my_mate/GetInfo.h"
 #include "find_my_mate/str_info.h"
 #include "color_filter/colorpart.h"
+#include "find_my_mate/Chat.h"
+
 
 #include "behaviortree_cpp_v3/behavior_tree.h"
 
@@ -34,6 +36,8 @@ namespace find_my_mate
   { 
     sub_clr_ = nh_.subscribe("/rgbcolor/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
     sub_obj_ = nh_.subscribe("/darknet_ros/bounding_boxes", 1, &GetInfo::callback_obj, this ) ;
+    sub_name_ = nh_.subscribe("/speech/param", 1, &GetInfo::callback_name, this );
+
   }
 
   void
@@ -48,6 +52,14 @@ namespace find_my_mate
     info_.color = clrpart->color.data;
     detectedclr_ = true;
     ROS_INFO("color");
+  }
+
+  void
+  GetInfo::callback_name(const std_msgs::StringConstPtr& msg)
+  {
+    ROS_INFO("PARAMETRO: %s", msg->data.c_str());
+    info_.name = msg->data;
+    detectedname_=true;
   }
 
   void
@@ -67,18 +79,20 @@ namespace find_my_mate
   BT::NodeStatus
   GetInfo::tick()
   {
-    if (firsttick_){
-        ROS_INFO("speek");
-        //iniciar speech.
-        firsttick_=false;
-        detectedname_=true;
+    if (! detectedname_){
+      if (firsttick_) {
+        ROS_INFO("speak");
+        forwarder.speak("Avoid error");
+        forwarder.speak("What is your name?");
+      }
+
+      forwarder.listen();
+      firsttick_=false;
     }
 
 
     if (detectedclr_ && detectedname_ && detectedobj_)
     {
-      
-
         ROS_INFO("finishing");
         BT::TreeNode::setOutput("info", info_);
         firsttick_ = true;

@@ -31,6 +31,7 @@ int main(int argc, char **argv)
   BT::BehaviorTreeFactory factory;
   BT::SharedLibrary loader;
 
+  factory.registerFromPlugin(loader.getOSName("asr_Starting_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_GetInfo_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_Description_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_GoPosition_bt_node"));
