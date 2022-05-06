@@ -35,6 +35,9 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_start_take_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_goposition_take_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_gorefere_take_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_DetectLuggage_take_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_WaitForOrder_take_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_Say_take_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
 
