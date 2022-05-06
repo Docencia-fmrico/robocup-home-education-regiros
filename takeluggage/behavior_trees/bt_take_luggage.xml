@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="BehaviorTree">
+    <!-- ////////// -->
+    <BehaviorTree ID="BehaviorTree">
+        <SequenceStar>
+            <Action ID="Start"/>
+            <Action ID="SendReferee" point="{point}"/>
+            <Action ID="GoPoint" point="{point}"/>
+        </SequenceStar>
+    </BehaviorTree>
+    <!-- ////////// -->
+    <TreeNodesModel>
+        <Action ID="GoPoint">
+            <input_port name="{point}"/>
+        </Action>
+        <Action ID="SendReferee">
+            <output_port name="{point}"/>
+        </Action>
+        <Action ID="Start"/>
+    </TreeNodesModel>
+    <!-- ////////// -->
+</root>
+
