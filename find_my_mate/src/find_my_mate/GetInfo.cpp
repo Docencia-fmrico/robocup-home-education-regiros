@@ -34,7 +34,7 @@ namespace find_my_mate
     detectedname_(false),
     detectedobj_(false)
   { 
-    sub_clr_ = nh_.subscribe("/rgbcolor/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
+    sub_clr_ = nh_.subscribe("/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
     sub_obj_ = nh_.subscribe("/darknet_ros/bounding_boxes", 1, &GetInfo::callback_obj, this ) ;
   }
 
@@ -72,7 +72,6 @@ namespace find_my_mate
     if (! detectedname_){
       if (firsttick_) {
         ROS_INFO("speak");
-        forwarder.speak("Avoid error");
         forwarder.speak("What is your name?");
       }
 

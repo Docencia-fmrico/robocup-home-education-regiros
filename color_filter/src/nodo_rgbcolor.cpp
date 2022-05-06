@@ -9,9 +9,9 @@ namespace color_filter
     RGBColor::RGBColor()
     : nh_("~")
     {
-        sub_ = nh_.subscribe("/mediargb_node/rgb_val", 1, 
+        sub_ = nh_.subscribe("/rgb_val", 1, 
                                 &RGBColor::callback_rgbval, this);
-        pub_ = nh_.advertise<color_filter::colorpart>("colorpart", 1);
+        pub_ = nh_.advertise<color_filter::colorpart>("/colorpart", 1);
     }
 
     void RGBColor::namecolor(std_msgs::String *str, const color_filter::rgb_valConstPtr& rgbval)

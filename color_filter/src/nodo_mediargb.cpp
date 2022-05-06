@@ -8,8 +8,8 @@ namespace color_filter
     MediaRGB::MediaRGB()
     :   nh_("~")
     {
-        sub_ = nh_.subscribe("/box_node/box_in_image", 1, &MediaRGB::callback_boximg, this);
-        pub_ = nh_.advertise<color_filter::rgb_val>("rgb_val", 1);
+        sub_ = nh_.subscribe("/box_in_image", 1, &MediaRGB::callback_boximg, this);
+        pub_ = nh_.advertise<color_filter::rgb_val>("/rgb_val", 1);
     }
 
     void MediaRGB::calculatemedia(color_filter::rgb_val *rgbval, const color_filter::box_in_imageConstPtr& boximg)
