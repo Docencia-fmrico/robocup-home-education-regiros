@@ -4,12 +4,14 @@
     <BehaviorTree ID="BehaviorTree">
         <SequenceStar>
             <Action ID="Start"/>
-            <Action ID="SendReferee" point="{point}"/>
-            <Action ID="GoPoint" point="{point}"/>
+            <Action ID="SendReferee" {point}=""/>
+            <Action ID="GoPoint" {point}=""/>
+            <Action ID="DetectLuggage"/>
         </SequenceStar>
     </BehaviorTree>
     <!-- ////////// -->
     <TreeNodesModel>
+        <Action ID="DetectLuggage"/>
         <Action ID="GoPoint">
             <input_port name="{point}"/>
         </Action>
