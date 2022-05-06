@@ -96,7 +96,7 @@ target_link_libraries(testRotUPerson_node ${catkin_LIBRARIES})
 
 add_library(asr_gposition_bt_node SHARED src/Position/Client_nav.cpp)
 add_library(asr_sposition_bt_node SHARED src/Position/SendPoint.cpp)
-add_library(asr_Starting_bt_node SHARED src/find_my_mate/Starting.cpp)
+add_library(asr_Starting_bt_node SHARED src/find_my_mate/Start.cpp)
 add_library(asr_goreferee_bt_node SHARED src/Position/SendReferee.cpp)
 add_library(asr_GetInfo_bt_node SHARED src/find_my_mate/GetInfo.cpp)
 add_library(asr_Description_bt_node SHARED src/find_my_mate/Description.cpp)
@@ -131,6 +131,6 @@ target_link_libraries(node_prueba ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_
 
 
 add_executable(node_find_my_mate 
-	src/find_my_mate_node.cpp src/Chat.cpp
+	src/find_my_mate_node.cpp src/find_my_mate/Chat.cpp
 )
 target_link_libraries(node_find_my_mate ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})

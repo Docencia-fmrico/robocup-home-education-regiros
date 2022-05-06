@@ -34,10 +34,8 @@ namespace find_my_mate
     detectedname_(false),
     detectedobj_(false)
   { 
-    sub_clr_ = nh_.subscribe("/rgbcolor/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
+    sub_clr_ = nh_.subscribe("/colorpart", 1, &GetInfo::callback_clrpart, this ) ;
     sub_obj_ = nh_.subscribe("/darknet_ros/bounding_boxes", 1, &GetInfo::callback_obj, this ) ;
-    sub_name_ = nh_.subscribe("/speech/param", 1, &GetInfo::callback_name, this );
-
   }
 
   void
@@ -52,14 +50,6 @@ namespace find_my_mate
     info_.color = clrpart->color.data;
     detectedclr_ = true;
     ROS_INFO("color");
-  }
-
-  void
-  GetInfo::callback_name(const std_msgs::StringConstPtr& msg)
-  {
-    ROS_INFO("PARAMETRO: %s", msg->data.c_str());
-    info_.name = msg->data;
-    detectedname_=true;
   }
 
   void
@@ -90,6 +80,12 @@ namespace find_my_mate
       firsttick_=false;
     }
 
+    if (forwarder.done_)
+    {
+      info_.name = forwarder.param_;
+      forwarder.speak(forwarder.response_);
+      detectedname_ = true;
+    }
 
     if (detectedclr_ && detectedname_ && detectedobj_)
     {

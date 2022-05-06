@@ -12,34 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef FIND_MY_MATE_CHAT_H
-#define FIND_MY_MATE_CHAT_H
-
-#include <gb_dialog/DialogInterface.h>
+#include "ros/ros.h"
+#include "find_my_mate/GoPosition.h"
+#include "behaviortree_cpp_v3/behavior_tree.h"
 #include <string>
-#include "std_msgs/String.h"
-
-namespace ph = std::placeholders;
 
 namespace find_my_mate
 {
-class Chat : public gb_dialog::DialogInterface
-{
-  public:
-    Chat();
+  GoPosition::GoPosition(const std::string& name)
+  : BT::ActionNodeBase(name, {}),
+    nh_("~"),
+    count_(0)
+  {}
 
-    void noIntentCB(dialogflow_ros_msgs::DialogflowResult result);
+  void
+  GoPosition::halt()
+  {
+    ROS_INFO("Start halt");
+  }
 
-    void startCB(dialogflow_ros_msgs::DialogflowResult result);
+  BT::NodeStatus
+  GoPosition::tick()
+  {
+    while (count_ < 10)
+    {
+      ROS_INFO("Moving... %d", count_);
+      count_++;
+      return BT::NodeStatus::RUNNING;
+    }
 
-    void askNameCB(dialogflow_ros_msgs::DialogflowResult result);
+    count_ = 0;
+    return BT::NodeStatus::SUCCESS;
+  }
 
-    bool done_;
-    std::string param_;
-    std::string response_;
-  private:
-    ros::NodeHandle nh_;
-};
 };  // namespace find_my_mate
 
-#endif  // FIND_MY_MATE_CHAT_H
+#include "behaviortree_cpp_v3/bt_factory.h"
+BT_REGISTER_NODES(factory)
+{
+  factory.registerNodeType<find_my_mate::GoPosition>("GoPosition");
+}

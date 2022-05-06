@@ -12,7 +12,7 @@ namespace color_filter
 
     {
         sync_bbx_.registerCallback(boost::bind(&PersonBoxes::callback_bbx, this, _1, _2));
-        pub_ = nh_.advertise<color_filter::box_in_image>("box_in_image", 1);
+        pub_ = nh_.advertise<color_filter::box_in_image>("/box_in_image", 1);
     }
 
     void PersonBoxes::asigncorners(color_filter::box_in_image *boximg, int xmax, int ymax, int xmin, int ymin)

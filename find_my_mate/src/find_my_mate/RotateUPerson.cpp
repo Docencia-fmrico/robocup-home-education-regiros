@@ -32,6 +32,7 @@ namespace find_my_mate
     bbx_sub_(nh_, "/darknet_ros/bounding_boxes", 1),
     sync_bbx_(MySyncPolicy_bbx(10), cinf_sub_, bbx_sub_),
     positioned_(false),
+    firsttick_(true),
     dir_(1)
   {
     pub_ = nh_.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity", 1);
@@ -72,11 +73,14 @@ namespace find_my_mate
   RotateUPerson::tick()
   {
     if (firsttick_){
-      initTime_ = ros::Time::now();
-      firsttick_ = false;
-    }
-
-    if (positioned_){
+        initTime_ = ros::Time::now();
+        firsttick_ = false;        
+        ROS_INFO("rotate");
+        twist.angular.z=0.3*dir_;
+        twist.linear.x=0;
+        pub_.publish(twist);
+        return BT::NodeStatus::RUNNING;
+    } else if (positioned_){
         ROS_INFO("positioned");
         twist.angular.z=0;
         twist.linear.x=0;
@@ -86,12 +90,13 @@ namespace find_my_mate
         return BT::NodeStatus::SUCCESS;
     } else if ((ros::Time::now() - initTime_).sec <= 5){
         ROS_INFO("rotate");
-        twist.angular.z=0.1*dir_;
+        twist.angular.z=0.3*dir_;
         twist.linear.x=0;
         pub_.publish(twist);
         return BT::NodeStatus::RUNNING;
     } else {
         ROS_INFO("time out");
+        ROS_INFO("time: %d", (ros::Time::now() - initTime_).sec);
         twist.angular.z=0;
         twist.linear.x=0;
         pub_.publish(twist);

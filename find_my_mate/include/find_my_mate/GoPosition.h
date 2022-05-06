@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 // Copyright 2022 Intelligent Robotics Lab
+=======
+// Copyright 2022 Regiros
+>>>>>>> bc0b060bff163a4fd9002432731bb664a4d17dc0
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
