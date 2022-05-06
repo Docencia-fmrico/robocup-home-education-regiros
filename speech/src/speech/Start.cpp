@@ -42,7 +42,6 @@ namespace speech
       forwarder.done_ = false;
       forwarder.speak("Avoid error");
       forwarder.speak("I'm ready, tell me when you want me to start");
-      forwarder.listen();
     }
 
     ROS_INFO("Done Start: %d", forwarder.done_);
@@ -53,6 +52,7 @@ namespace speech
     }
     else
     {
+      forwarder.listen();
       return BT::NodeStatus::RUNNING;
     }
   }
