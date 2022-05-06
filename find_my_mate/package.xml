@@ -58,6 +58,9 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>libzmq3-dev</build_depend>
   <build_depend>message_filters</build_depend>
+  <build_depend>dialogflow_ros_msgs</build_depend>
+  <build_depend>gb_dialog</build_depend>
+  <build_depend>sound_play</build_depend>
 
   <build_export_depend>behaviortree_cpp_v3</build_export_depend>
   <build_export_depend>color_filter</build_export_depend>
@@ -68,6 +71,9 @@
   <build_export_depend>message_filters</build_export_depend>
   <build_export_depend>behaviortree_cpp_v3</build_export_depend>
   <build_export_depend>libzmq3-dev</build_export_depend>
+  <build_export_depend>dialogflow_ros_msgs</build_export_depend>
+  <build_export_depend>gb_dialog</build_export_depend>
+  <build_export_depend>sound_play</build_export_depend>
   
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
@@ -78,6 +84,9 @@
   <exec_depend>roscpp</exec_depend>
   <exec_depend>libzmq3-dev</exec_depend>
   <exec_depend>message_filters</exec_depend>
+  <exec_depend>dialogflow_ros_msgs</exec_depend>
+  <exec_depend>gb_dialog</exec_depend>
+  <exec_depend>sound_play</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

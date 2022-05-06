@@ -27,6 +27,8 @@ namespace find_my_mate
 
     forwarder.speak("Avoid error");
     forwarder.speak(phrase);
+
+    return BT::NodeStatus::SUCCESS;
   }
 
 }  // namespace find_my_mate

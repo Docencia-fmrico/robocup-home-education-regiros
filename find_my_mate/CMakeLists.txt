@@ -121,7 +121,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES find_my_mate
   CATKIN_DEPENDS 
   behaviortree_cpp_v3 
@@ -129,6 +129,9 @@ catkin_package(
   darknet_ros_msgs 
   roscpp
   std_msgs 
+  dialogflow_ros_msgs
+  gb_dialog 
+  sound_play
   sensor_msgs
   geometry_msgs
   message_filters
@@ -149,46 +152,47 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
+#add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/find_my_mate.cpp
 # )
-#add_library(asr_Starting_bt_node SHARED src/find_my_mate/Starting.cpp)
-#target_link_libraries(asr_Starting_bt_node find_my_mate)
+add_library(asr_Start_bt_node SHARED src/find_my_mate/Start.cpp)
+target_link_libraries(asr_Start_bt_node)
 
-#add_library(asr_Description_bt_node SHARED src/find_my_mate/Description.cpp)
-#target_link_libraries(asr_Description_bt_node find_my_mate)
+add_library(asr_Description_bt_node SHARED src/find_my_mate/Description.cpp)
+target_link_libraries(asr_Description_bt_node)
 
-#add_library(asr_GetInfo_bt_node SHARED src/find_my_mate/GetInfo.cpp)
-#target_link_libraries(asr_GetInfo_bt_node find_my_mate)
+add_library(asr_GetInfo_bt_node SHARED src/find_my_mate/GetInfo.cpp)
+target_link_libraries(asr_GetInfo_bt_node)
 
-#add_library(asr_GoPosition_bt_node SHARED src/find_my_mate/GoPosition.cpp)
-#target_link_libraries(asr_GoPosition_bt_node find_my_mate)
+add_library(asr_GoPosition_bt_node SHARED src/find_my_mate/GoPosition.cpp)
+target_link_libraries(asr_GoPosition_bt_node)
 
-#add_library(asr_RotateUPerson_bt_node SHARED src/find_my_mate/RotateUPerson.cpp)
-#target_link_libraries(asr_RotateUPerson_bt_node find_my_mate)
+add_library(asr_RotateUPerson_bt_node SHARED src/find_my_mate/RotateUPerson.cpp)
+target_link_libraries(asr_RotateUPerson_bt_node)
 
-#list(APPEND plugin_libs
-#  asr_RotateUPerson_bt_node
-#  asr_GoPosition_bt_node
-#  asr_GetInfo_bt_node
-#  asr_Starting_bt_node
-#  asr_Description_bt_node
-#)
+list(APPEND plugin_libs
+  asr_RotateUPerson_bt_node
+  asr_GoPosition_bt_node
+  asr_GetInfo_bt_node
+  asr_Start_bt_node
+  asr_Description_bt_node
+)
 
-#foreach(bt_plugin ${plugin_libs})
-#  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
-#  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
-#endforeach()
+foreach(bt_plugin ${plugin_libs})
+  target_link_libraries(${bt_plugin} ${catkin_LIBRARIES})
+  target_compile_definitions(${bt_plugin} PRIVATE BT_PLUGIN_EXPORT)
+endforeach()
 
-#add_executable(find_my_mate_node 
-#  src/find_my_mate_node.cpp
-#)
+add_executable(find_my_mate_node 
+  src/find_my_mate_node.cpp
+  src/find_my_mate/Chat.cpp
+)
 
-#target_link_libraries(find_my_mate_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(find_my_mate_node ${catkin_LIBRARIES} ${ZMQ_LIBRARIES} ${OpenCV_LIBRARIES})
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
