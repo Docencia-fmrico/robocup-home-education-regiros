@@ -31,8 +31,6 @@ class GetInfo : public BT::ActionNodeBase
 
     void callback_obj(const darknet_ros_msgs::BoundingBoxesConstPtr& boxes);
 
-    void callback_name(const std_msgs::StringConstPtr& msg);
-
     static BT::PortsList providedPorts()
     {
       return { BT::OutputPort<Infop>("info")};
@@ -42,7 +40,6 @@ class GetInfo : public BT::ActionNodeBase
     ros::NodeHandle nh_;
     ros::Subscriber sub_clr_;
     ros::Subscriber sub_obj_;
-    ros::Subscriber sub_name_;
     find_my_mate::Chat forwarder;
     Infop info_;
     bool firsttick_;

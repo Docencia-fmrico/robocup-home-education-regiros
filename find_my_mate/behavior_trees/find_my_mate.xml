@@ -3,19 +3,19 @@
     <!-- ////////// -->
     <BehaviorTree ID="find_my_mate_bt">
         <SequenceStar>
-            <Action ID="Starting"/>
+            <Action ID="Start"/>
             <Repeat num_cycles="3">
                 <SequenceStar>
+                    <Sequence>
+                        <Action ID="GoPosition"/>
+                        <Action ID="RotateUPerson"/>
+                    </Sequence>
+                    <Action ID="GetInfo" info="{info}"/>
                     <SequenceStar>
                         <Action ID="GoPosition"/>
                         <Action ID="RotateUPerson"/>
                     </SequenceStar>
-                    <Action ID="GetInfo" {info}=""/>
-                    <SequenceStar>
-                        <Action ID="GoPosition"/>
-                        <Action ID="RotateUPerson"/>
-                    </SequenceStar>
-                    <Action ID="Description" {info}=""/>
+                    <Action ID="Description" info="{info}"/>
                 </SequenceStar>
             </Repeat>
         </SequenceStar>
@@ -23,14 +23,14 @@
     <!-- ////////// -->
     <TreeNodesModel>
         <Action ID="Description">
-            <input_port name="{info}"/>
+            <input_port default="{info}" name="info"/>
         </Action>
         <Action ID="GetInfo">
-            <output_port name="{info}">info of person</output_port>
+            <output_port default="{info}" name="info">info of person</output_port>
         </Action>
         <Action ID="GoPosition"/>
         <Action ID="RotateUPerson"/>
-        <Action ID="Starting"/>
+        <Action ID="Start"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>

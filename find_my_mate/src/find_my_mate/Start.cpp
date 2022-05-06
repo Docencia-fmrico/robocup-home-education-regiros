@@ -13,36 +13,48 @@
 // limitations under the License.
 
 #include "ros/ros.h"
-#include "find_my_mate/GoPosition.h"
+#include "find_my_mate/Start.h"
 #include "behaviortree_cpp_v3/behavior_tree.h"
 #include <string>
 
 namespace find_my_mate
 {
-  GoPosition::GoPosition(const std::string& name)
+  Start::Start(const std::string& name)
   : BT::ActionNodeBase(name, {}),
     nh_("~"),
-    count_(0)
+    firsttick_(true)
   {}
 
   void
-  GoPosition::halt()
+  Start::halt()
   {
     ROS_INFO("Start halt");
   }
 
   BT::NodeStatus
-  GoPosition::tick()
+  Start::tick()
   {
-    while (count_ < 10)
+    ROS_INFO("First tick: %d", firsttick_);
+
+    if (firsttick_)
     {
-      ROS_INFO("Moving... %d", count_);
-      count_++;
-      return BT::NodeStatus::RUNNING;
+      firsttick_ = false;
+      forwarder.done_ = false;
+      forwarder.speak("Avoid error");
+      forwarder.speak("I'm ready, tell me when you want me to start");
     }
 
-    count_ = 0;
-    return BT::NodeStatus::SUCCESS;
+    ROS_INFO("Done Start: %d", forwarder.done_);
+    if (forwarder.done_)
+    { 
+      forwarder.speak(forwarder.response_);
+      return BT::NodeStatus::SUCCESS;
+    }
+    else
+    {
+      forwarder.listen();
+      return BT::NodeStatus::RUNNING;
+    }
   }
 
 };  // namespace find_my_mate
@@ -50,5 +62,5 @@ namespace find_my_mate
 #include "behaviortree_cpp_v3/bt_factory.h"
 BT_REGISTER_NODES(factory)
 {
-  factory.registerNodeType<find_my_mate::GoPosition>("GoPosition");
+  factory.registerNodeType<find_my_mate::Start>("Start");
 }

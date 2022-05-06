@@ -34,7 +34,6 @@ class Description : public BT::ActionNodeBase
 
   private:
     ros::NodeHandle nh_;
-    bool detected;
     find_my_mate::Chat forwarder;
     Infop info_;
     
