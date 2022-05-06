@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="color_filter" type="nodo_box" name="Box" output="screen"/>
+	<node pkg="color_filter" type="nodo_mediargb" name="MediaRGB" output="screen"/> 
+	<node pkg="color_filter" type="nodo_rgbcolor" name="RGBColor" output="screen"/> 
+</launch>
