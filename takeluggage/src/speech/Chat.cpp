@@ -46,26 +46,26 @@ namespace takeluggage
   void
   Chat::luggageIntentCB(dialogflow_ros_msgs::DialogflowResult result)
   {
-    std::string color;
+    std::string orientation;
 
     for (const auto & param : result.parameters)
     {
       for (const auto & value : param.value)
       {
-        color = value;
+        orientation = value;
       }
     }
 
     ROS_INFO("luggageIntentCB: intent [%s]", result.intent.c_str());
-    ROS_INFO("Color: %s", color.c_str());
+    ROS_INFO("orientation: %s", orientation.c_str());
     speak(result.fulfillment_text);
-    if (color.empty())
+    if (orientation.empty())
     {
       listen();
     }
     else
     {
-      this->param_ = color;
+      this->param_ = orientation;
       this->done_ = true;
     }
   }
