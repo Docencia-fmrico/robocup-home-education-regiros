@@ -87,11 +87,11 @@ link_directories(
 )
 add_definitions(${PCL_DEFINITIONS})
 
-add_executable(node_person_tf 
-	src/node_person_tf.cpp
-)
+#add_executable(node_person_tf 
+#	src/node_person_tf.cpp
+#)
 
-target_link_libraries(node_person_tf ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+#target_link_libraries(node_person_tf ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 
 #foreach(bt_plugin ${plugin_libs})

@@ -90,14 +90,19 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_library(asr_goposition_take_bt_node SHARED src/Move/Client_nav.cpp)
 add_library(asr_gorefere_take_bt_node SHARED src/Move/SendReferee.cpp)
-
 add_library(asr_start_take_bt_node SHARED src/speech/Start.cpp)
+add_library(asr_DetectLuggage_take_bt_node SHARED src/speech/DetectLuggage.cpp)
+add_library(asr_WaitForOrder_take_bt_node SHARED src/speech/WaitForOrder.cpp)
+add_library(asr_Say_take_bt_node SHARED src/speech/Say.cpp)
 
 
 list(APPEND plugin_libs
-asr_goposition_take_bt_node
-asr_gorefere_take_bt_node
-asr_start_take_bt_node
+  asr_goposition_take_bt_node
+  asr_gorefere_take_bt_node
+  asr_start_take_bt_node
+  asr_DetectLuggage_take_bt_node
+  asr_WaitForOrder_take_bt_node
+  asr_Say_take_bt_node
 )
 
 foreach(bt_plugin ${plugin_libs})
