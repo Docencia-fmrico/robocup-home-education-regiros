@@ -1,18 +1,20 @@
 <?xml version="1.0"?>
-<root main_tree_to_execute="find_my_mate_bt">
+<root main_tree_to_execute="BehaviorTree">
     <!-- ////////// -->
-    <BehaviorTree ID="find_my_mate_bt">
+    <BehaviorTree ID="BehaviorTree">
         <SequenceStar>
-            <Action ID="Start"/>
+            <Action ID="Starting"/>
             <Repeat num_cycles="3">
                 <SequenceStar>
                     <Sequence>
-                        <Action ID="GoPosition"/>
+                        <Action ID="SendPoint" point="{point}"/>
+                        <Action ID="GoPoint" point="{point}"/>
                         <Action ID="RotateUPerson"/>
                     </Sequence>
                     <Action ID="GetInfo" info="{info}"/>
                     <SequenceStar>
-                        <Action ID="GoPosition"/>
+                        <Action ID="GoReferee" point="{point}"/>
+                        <Action ID="GoPoint" point="{point}"/>
                         <Action ID="RotateUPerson"/>
                     </SequenceStar>
                     <Action ID="Description" info="{info}"/>
@@ -23,14 +25,22 @@
     <!-- ////////// -->
     <TreeNodesModel>
         <Action ID="Description">
-            <input_port default="{info}" name="info"/>
+            <input_port name="{info}"/>
         </Action>
         <Action ID="GetInfo">
-            <output_port default="{info}" name="info">info of person</output_port>
+            <output_port name="{info}">info of person</output_port>
         </Action>
-        <Action ID="GoPosition"/>
+        <Action ID="GoPoint">
+            <input_port name="{point}"/>
+        </Action>
+        <Action ID="GoReferee">
+            <output_port name="{point}"/>
+        </Action>
         <Action ID="RotateUPerson"/>
-        <Action ID="Start"/>
+        <Action ID="SendPoint">
+            <output_port name="{point}"/>
+        </Action>
+        <Action ID="Starting"/>
     </TreeNodesModel>
     <!-- ////////// -->
 </root>
