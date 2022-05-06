@@ -73,7 +73,7 @@ namespace speech
         twist.linear.x=0;
         pub_.publish(twist);
         firsttick_ = true;
-        return BT::NodeStatus::FAILURE;
+        return BT::NodeStatus::SUCCESS;
     }
   }
 
