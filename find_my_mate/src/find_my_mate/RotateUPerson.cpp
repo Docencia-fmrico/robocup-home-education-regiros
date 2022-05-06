@@ -76,7 +76,7 @@ namespace find_my_mate
         initTime_ = ros::Time::now();
         firsttick_ = false;        
         ROS_INFO("rotate");
-        twist.angular.z=0.1*dir_;
+        twist.angular.z=0.3*dir_;
         twist.linear.x=0;
         pub_.publish(twist);
         return BT::NodeStatus::RUNNING;
@@ -90,7 +90,7 @@ namespace find_my_mate
         return BT::NodeStatus::SUCCESS;
     } else if ((ros::Time::now() - initTime_).sec <= 5){
         ROS_INFO("rotate");
-        twist.angular.z=0.1*dir_;
+        twist.angular.z=0.3*dir_;
         twist.linear.x=0;
         pub_.publish(twist);
         return BT::NodeStatus::RUNNING;
