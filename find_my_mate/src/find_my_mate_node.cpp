@@ -34,8 +34,10 @@ int main(int argc, char **argv)
   factory.registerFromPlugin(loader.getOSName("asr_Start_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_GetInfo_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_Description_bt_node"));
-  factory.registerFromPlugin(loader.getOSName("asr_GoPosition_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_GoPoint_bt_node"));
   factory.registerFromPlugin(loader.getOSName("asr_RotateUPerson_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_SendPoint_bt_node"));
+  factory.registerFromPlugin(loader.getOSName("asr_GoReferee_bt_node"));
 
   auto blackboard = BT::Blackboard::create();
 
