@@ -48,7 +48,7 @@ namespace find_my_mate
   RotateUPerson::callback_bbx(const sensor_msgs::CameraInfoConstPtr& cinf, const darknet_ros_msgs::BoundingBoxesConstPtr& boxes)
   { 
     for (const auto & box : boxes->bounding_boxes) {
-        if (box.Class == "person"){
+        if (box.Class == "person" && box.probability > 0.7){
             ROS_INFO("person detected");
             int px = (box.xmax + box.xmin) / 2;
             if (px > cinf->width/2 - cinf->width/8 && px < cinf->width/2 + cinf->width/8 ){

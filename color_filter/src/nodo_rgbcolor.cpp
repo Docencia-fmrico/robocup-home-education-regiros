@@ -20,7 +20,7 @@ namespace color_filter
         int G = rgbval->G;
         int B = rgbval->B;
 
-        if (R <= 100 && B<= 100 && G<= 100){
+        if (R <= 90 && B<= 90 && G<= 90){
             str->data = "black";
         } else if (R >= 200 && G >= 200 && B >= 200){
             str->data = "white";

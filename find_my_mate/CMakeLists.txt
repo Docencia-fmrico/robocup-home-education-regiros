@@ -86,14 +86,6 @@ link_directories(
 )
 add_definitions(${PCL_DEFINITIONS})
 
-add_executable(testRotUPerson_node src/testRotUPerson_node.cpp)
-
-add_dependencies(testRotUPerson_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(testRotUPerson_node ${catkin_LIBRARIES})
-
-
-
 add_library(asr_GoPoint_bt_node SHARED src/Position/Client_nav.cpp)
 add_library(asr_SendPoint_bt_node SHARED src/Position/SendPoint.cpp)
 add_library(asr_Start_bt_node SHARED src/find_my_mate/Start.cpp)
