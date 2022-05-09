@@ -10,17 +10,17 @@ David Duro Aragonés <br />
 ## Índice
    - ¿Qué pruebas elegimos y por qué?
    - Prueba 1
-    - ¿Cuál fue nuestra idea principal?
-    - ¿Cómo tuvimos que modificarlo?
-    - Relación entre plan y ejecución
+      - ¿Cuál fue nuestra idea principal?
+      - ¿Cómo tuvimos que modificarlo?
+      - Relación entre plan y ejecución
    - Prueba 2
-    - ¿Cuál fue nuestra idea principal?
-    - ¿Cómo tuvimos que modificarlo?
-    - Relación entre plan y ejecución
+      - ¿Cuál fue nuestra idea principal?
+      - ¿Cómo tuvimos que modificarlo?
+      - Relación entre plan y ejecución
    - Prueba 3
-    - ¿Cuál fue nuestra idea principal?
-    - ¿Cómo tuvimos que modificarlo?
-    - Relación entre plan y ejecución
+      - ¿Cuál fue nuestra idea principal?
+      - ¿Cómo tuvimos que modificarlo?
+      - Relación entre plan y ejecución
    - Problemas Generales
    
 
