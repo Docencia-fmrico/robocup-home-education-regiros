@@ -34,7 +34,7 @@ Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras prueb
 
 ## 1.0 Explicación de código
 
-Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro usando TF's, de forma que con puntos previamente apuntados, se crea una ruta del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y orientandose hacia la maleta correspondiente.
+Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro, de forma que con puntos previamente apuntados, se crea una ruta del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y orientandose hacia la maleta correspondiente. Posteriormente debía seguir al árbitro mediante navegación a través de TF's publicadas en la posicion del árbitro estableciendo de esta forma un camino desde el robot hasta la persona.
 
 ### 1.1 ¿Cuál fue nuestra idea principal?
 
@@ -49,7 +49,7 @@ Para la elección de equipaje la idea principal era hacerlo por diálogo.
   
 ### 1.2 ¿Cómo tuvimos que modificarlo?
 
-Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplemente se movía al punto enviado creando una TF hacia este.
+Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplemente se movía al punto enviado.
 Además, tuvimos que abandonar la idea de hacer esta prueba entera y creamos un nuevo Behavior Tree, el cuál navegaba hasta el punto del árbitro.
 
 ### 1.3 Relación entre plan y ejecución
