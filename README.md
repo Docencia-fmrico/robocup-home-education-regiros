@@ -34,13 +34,13 @@ Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras prueb
 
 ## 1.0 Explicación de código
 
-Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro usando tfs, de forma que con puntos previamente apuntados, se crea una tf del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y respondiendo el color de la maleta.
+Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro usando TF's, de forma que con puntos previamente apuntados, se crea una ruta del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y orientandose hacia la maleta correspondiente.
 
 ### 1.1 ¿Cuál fue nuestra idea principal?
 
-Para esta primera prueba pensamos que la mejor opción era crear un nuevo programa de navegación usando tfs de forma que siguiese a una persona enviándole la posición de esta. Además, podríamos usar este método de navegación para un entorno no mapeado, de forma que el robot siguiese las tfs indicadas y esquivar objetos usando el láser como en el bum&go. 
+Para esta primera prueba pensamos que la mejor opción era crear un nuevo programa de navegación usando TF's de forma que siguiese a una persona enviándole la posición de esta. Además, podríamos usar este método de navegación para un entorno no mapeado, de forma que el robot siguiese las TF's indicadas y esquivara objetos usando el láser como en el bump&go. 
 Para la solucionar el problema de la navegación al volver ideamos dos métodos:
-- 1. Mapear la zona desconocida en un mapa local al mismo tiempo que seguíamos a la persona para así poder volver por una zona mapeada sin necesidad de preocuparnos    por objetos locales.
+- 1. Mapear la zona desconocida en un mapa local al mismo tiempo que seguíamos a la persona para así poder volver por una zona mapeada sin necesidad de preocuparnos por objetos locales.
 - 2. Crear una especie de sendero de checkpoints de forma que el robot solo tuviese que ir de uno en uno para encontrar el camino de vuelta a la vez que usaba el láser para esquivar obstáculos.
   
 Tras varios días creando el programa base de navegación y muchos imprevistos comenzamos a cuestionarnos estas dos soluciones, por lo que decidimos dejar parada la forma de volver.
@@ -49,58 +49,59 @@ Para la elección de equipaje la idea principal era hacerlo por diálogo.
   
 ### 1.2 ¿Cómo tuvimos que modificarlo?
 
-Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplemente se movía al punto enviado creando una tf hacia este.
-Además, tuvimos que abandonar la idea de hacer esta prueba entera y creamos un nuevo BT, el cuál navegaba hasta el punto del árbitro y elegía una maleta con el filtro de color.
+Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplemente se movía al punto enviado creando una TF hacia este.
+Además, tuvimos que abandonar la idea de hacer esta prueba entera y creamos un nuevo Behavior Tree, el cuál navegaba hasta el punto del árbitro.
 
 ### 1.3 Relación entre plan y ejecución
 
-La verdad es que esta prueba ha sido a la que más horas y esfuerzo hemos dedicado y la que peor logramos, nos surgieron muchos problemas con la naegación, seguidos de problemas con el BT, además de inconvenientes en la detección y seguimiento de una persona. Es por ello que tuvimos que abandonar esta prueba y dejarla a medias.
-En su ejecución el robot fue a la posición del arbitro y ahí terminó su ejecución.
+Tras muchas horas de trabajo no pudimos completar la navegación por entornos desconocidos, seguidos de problemas con el Behavior Tree, además de inconvenientes en la detección y seguimiento de una persona. Es por ello que tuvimos que abandonar esta prueba y dejarla a medias.
+En su ejecución el robot únicamente fue a la posición del arbitro.
 
 ## 2. Prueba 2
 
 ### 2.0 Explicación de código
 
-El robot espera la orden de start para comenzar, después, va yendo a cada posición mandada para buscar personas, si las encuentra deberá preguntarles el nombre, detectar por boundingboxes qué objeto portan y además detectar mediante un filtro de color, detectar el color de su ropa. Tras guardar estos datos el robot debe ir a la posición del árbitro y decirle los datos recogidos.
+El robot espera la orden de start para comenzar, después, va yendo a cada posición mandada para buscar personas, si las encuentra deberá preguntarles el nombre, detectar por boundingboxes qué objeto portan y además detectar mediante un filtro de color, el color de su ropa. Tras guardar estos datos el robot debe ir a la posición del árbitro y decirle los datos recogidos.
 
 ### 2.1 ¿Cuál fue nuestra idea principal?
 
-La idea principal era utilizar el programa de navegación base que ya intentamos implementar en la 1ª prueba, pero no fue posible. Teníamos pensado ir buscando punto por punto y crear un servicio para el habla y escucha del robot, lo cuál también se nos complicó.
+La idea principal era utilizar el programa de navegación base que ya intentamos implementar en la 1ª prueba, pero no fue posible. Teníamos pensado ir buscando punto por punto y crear un servicio para el habla y escucha del robot, el cuál finalmente no llegó a implementarse. Para detectar el color de la camiseta se implementó un filtro de color que mide los valores hsv del bounding box de la persona y realiza la media para devolver el color predominante en forma de string.
+En cuanto al objeto, se detectaba mediante Darknet. 
 
 ### 2.2 ¿Cómo tuvimos que modificarlo?
 
-Para esta prueba se nos ocurrió un BT muy sencillo implementando la navegación de punto a punto, por lo que aún teniendo poco tiempo no tuvimos muchos problemas en la creación de los nodos. Al tener que rehacer el habla se nos ocurrió hacerlo por nodos, de esta forma solo escuchaba cuando tenía que hacerlo.
-En resumen, el robot debía ir punto a punto mirando a ver si detectaba una persona, si lo hacía le tendría que preguntar su nombre, detectar el color de su camiseta con u n filtro de color y el objeto que sujetaba y guardar todas estas respuestas para posteriormente ir a la posición del árbitro y decirle estos datos recogidos. Este proceso solo tenía que repetirse tres veces.
+Para esta prueba se nos ocurrió un Behavior Tree muy sencillo implementando la navegación de punto a punto, por lo que aún teniendo poco tiempo no tuvimos muchos problemas en la creación de los nodos. El diálogo fue implementado a través de nodos, de esta forma solo escuchaba cuando tenía que hacerlo. Y en caso de haber algún problema en la comprensión, podía volver a preguntar.
+
+En resumen, el robot debía ir punto a punto mirando a ver si detectaba una persona, si lo hacía le tendría que preguntar su nombre, detectar el color de su camiseta con un filtro de color y el objeto que sujetaba y guardar todas estas respuestas para posteriormente ir a la posición del árbitro y decirle estos datos recogidos. Este proceso tenía que repetirse tres veces.
 
 ### 2.3 Relación entre plan y ejecución
 
-Esta prueba nos funcionaba perfectamente, pero la navegación nunca es perfecta y podía alterarnos la ejecución ya que en el simulador funcionaba perfectamente, pero en la realidad podía desorientarse.
-Finalmente, el robot entró en una zona negra de su mapa, por lo que la navegación murió y siguió con el programa principal, haciendo preguntas y guardando las respuestas.
+Sin contar el error recurrente en la navegación, recibía bien los datos de las personas y los comunicaba de forma relativamente precisa, siendo el apartado más problematico la detección del objeto.
+Finalmente, durante la ejecución un problema con la navegación hizo que el robot dejara de moverse, pero este siguió con el programa principal, haciendo preguntas y guardando las respuestas.
 
 ## 3. Prueba 3
 
 ### 3.0 Explicación de código
 
-El robot debe esperar la orden de start para comenzar, tras recibirla, irá a por el primer invitado, preguntándole su nombre y bebida favorita, después le dará una respuesta apropiada y le guiará hasta la zona de sillas, allí, le preguntará la edad, después buscará un asiento vacío por medio de boundingboxes y le ordenará sentarse, repitiendo el proceso hasta tres veces.
+El robot debe esperar la orden de start para comenzar, tras recibirla, irá a por el primer invitado, preguntándole su nombre y bebida favorita y le guiará hasta la zona de sillas, allí, le preguntará la edad, después buscará un asiento vacío por medio de boundingboxes y le ordenará sentarse, teniendo en cuenta la edad, este proceso se repite hasta tres veces.
 
 ### 3.1 ¿Cuál fue nuestra idea principal?
 
 Esta prueba no entraba dentro de nuestros planes, pero al no poder realizar la primera prueba correctamente y tener varias ideas de cómo realizarla decidimos intentarlo.
 Lo primero era usar nuestro programa de navegación punto a punto para poder ir de la zona de sillas a la entrada varias veces.
-Nuestro robot debía realizar una serie de preguntas al invitado y después llevarle a la zona de sillas, preguntándole a este su edad, de forma que si superaba un límite de edad se le recomendaría sentarse en el sofá.
+Nuestro robot debía realizar una serie de preguntas al invitado y después llevarle a la zona de sillas, preguntándole a este su edad, de forma que si superaba un límite de edad de 50 años, se le recomendaría sentarse en el sofá.
 
 ### 3.2 ¿Cómo tuvimos que modificarlo?
  
- Como esta prueba la cogimos a última hora, no tuvimos que modificarlo, simplemente planeamos dos opciones para la elección de sillas vacías:
+ Para la elección de sillas vacías ideamos dos opciones:
  - 1. Crear un array con el nº de sillas correspondiente y tener booleanos que indicasen si habíamos sentado a alguien ahí y si eran sillas o sofás.
  - 2. Usar las boundingboxes, de forma que una silla vacía la detectase como silla, y una silla ocupada la detectaría como persona.
  Tras pensar alternativas para poder terminar este programa decidimos detectar las sillas vacías con boundingboxes y ordenar que se sentaran con diálogo.
  
 ### 3.3 Relación entre plan y ejecución
 
-En la ejecución de este último programa nos pasó lo mismo que en la segunda prueba, el robot entró en una zona negra del mapa, por lo que su navegación murió.
+Al igual que en la seguda prueba, un fallo de navegación impidió que el robot se moviera. Sin embargo, continuó con la ejecución del programa, recibiendo y reportando los datos correctamente.
 
 ## 4. Problemas Generales
 
-Nuestro robot tuvo problemas en la navegación ya que al entrar en una zona negra ya no era capaz de salir, intentamos disminuir estas zonas negras del mapa y aumentar las grises para disminuir la velocidad del robot, pero en el segundo intento nos dio un fallo inesperado y no pudimos arreglarlo.
-Para arrancar nuestro programa el robot debía escuchar la orden start, go, etc, pero no reconocía bien start, y perdimos un valioso tiempo.
+Nuestro robot tuvo problemas en la navegación, intentamos disminuir estas zonas negras del mapa y aumentar las grises para disminuir la velocidad del robot, pero en el segundo intento nos dio un fallo inesperado y no pudimos arreglarlo.
