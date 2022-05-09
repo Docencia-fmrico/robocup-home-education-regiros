@@ -36,13 +36,13 @@ Para la solucionar el problema de la navegación al volver ideamos dos métodos:
 - 1. Mapear la zona desconocida en un mapa local al mismo tiempo que seguíamos a la persona para así poder volver por una zona mapeada sin necesidad de preocuparnos    por objetos locales.
 - 2. Crear una especie de sendero de checkpoints de forma que el robot solo tuviese que ir de uno en uno para encontrar el camino de vuelta a la vez que usaba el láser para esquivar obstáculos.
   
-Tras varios días creando el programa base de navegación y muchos imprevistos comenzamos a cuestionarnos estas dos soluciones, por lo que decidimos mapear todo el recorrido por el momento.
+Tras varios días creando el programa base de navegación y muchos imprevistos comenzamos a cuestionarnos estas dos soluciones, por lo que decidimos dejar parada la forma de volver.
 
-Para la elección de equipaje la idea principal era dejarlo al azar, pero tras unas horas probando ideamos un filtro de color con el que podíamos distinguir los colores de personas, objetos, etc.
+Para la elección de equipaje la idea principal era hacerlo por diálogo.
   
 ### 1.2 ¿Cómo tuvimos que modificarlo?
 
-Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplmente se movía al punto enviado creando una tf hacia este.
+Los últimos días seguíamos con problemas en la navegación por lo que creamos un programa que simplemente se movía al punto enviado creando una tf hacia este.
 Además, tuvimos que abandonar la idea de hacer esta prueba entera y creamos un nuevo BT, el cuál navegaba hasta el punto del árbitro y elegía una maleta con el filtro de color.
 
 ### 1.3 Relación entre plan y ejecución
@@ -79,7 +79,7 @@ Nuestro robot debía realizar una serie de preguntas al invitado y después llev
  Como esta prueba la cogimos a última hora, no tuvimos que modificarlo, simplemente planeamos dos opciones para la elección de sillas vacías:
  - 1. Crear un array con el nº de sillas correspondiente y tener booleanos que indicasen si habíamos sentado a alguien ahí y si eran sillas o sofás.
  - 2. Usar las boundingboxes, de forma que una silla vacía la detectase como silla, y una silla ocupada la detectaría como persona.
- Tras pensar alternativas para poder terminar este programa decidimos simplemente ordenar que se sentaran en una silla o sofá, dependiendo de la edad.
+ Tras pensar alternativas para poder terminar este programa decidimos detectar las sillas vacías con boundingboxes y ordenar que se sentaran con diálogo.
  
 ### 3.3 Relación entre plan y ejecución
 
