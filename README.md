@@ -1,6 +1,29 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=7421157&assignment_repo_type=AssignmentRepo)
 # RoboCup
 
+## Creators:
+Marina Wiesenberg Bustillo <br />
+Juan Miguel Valverde García <br />
+Daniel Quinga López <br />
+David Duro Aragonés <br />
+
+## Índice
+   - ¿Qué pruebas elegimos y por qué?
+   - Prueba 1
+    - ¿Cuál fue nuestra idea principal?
+    - ¿Cómo tuvimos que modificarlo?
+    - Relación entre plan y ejecución
+   - Prueba 2
+    - ¿Cuál fue nuestra idea principal?
+    - ¿Cómo tuvimos que modificarlo?
+    - Relación entre plan y ejecución
+   - Prueba 3
+    - ¿Cuál fue nuestra idea principal?
+    - ¿Cómo tuvimos que modificarlo?
+    - Relación entre plan y ejecución
+   - Problemas Generales
+   
+
 ## ¿Qué pruebas elegimos y por qué?
 Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras pruebas pensamos y decidimos que las más sencillas serían la 1ª y la 2ª, ya que creando un buen programa base de navegación tendríamos todo casi hecho.
 
@@ -10,8 +33,8 @@ Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras prueb
 
 Para esta primera prueba pensamos que la mejor opción era crear un nuevo programa de navegación usando tfs de forma que siguiese a una persona enviándole la posición de esta. Además, podríamos usar este método de navegación para un entorno no mapeado, de forma que el robot siguiese las tfs indicadas y esquivar objetos usando el láser como en el bum&go. 
 Para la solucionar el problema de la navegación al volver ideamos dos métodos:
-  1- Mapear la zona desconocida en un mapa local al mismo tiempo que seguíamos a la persona para así poder volver por una zona mapeada sin necesidad de preocuparnos    por objetos locales.
-  2- Crear una especie de sendero de checkpoints de forma que el robot solo tuviese que ir de uno en uno para encontrar el camino de vuelta a la vez que usaba el láser para esquivar obstáculos.
+- 1. Mapear la zona desconocida en un mapa local al mismo tiempo que seguíamos a la persona para así poder volver por una zona mapeada sin necesidad de preocuparnos    por objetos locales.
+- 2. Crear una especie de sendero de checkpoints de forma que el robot solo tuviese que ir de uno en uno para encontrar el camino de vuelta a la vez que usaba el láser para esquivar obstáculos.
   
 Tras varios días creando el programa base de navegación y muchos imprevistos comenzamos a cuestionarnos estas dos soluciones, por lo que decidimos mapear todo el recorrido por el momento.
 
@@ -54,8 +77,8 @@ Nuestro robot debía realizar una serie de preguntas al invitado y después llev
 ### ¿Cómo tuvimos que modificarlo?
  
  Como esta prueba la cogimos a última hora, no tuvimos que modificarlo, simplemente planeamos dos opciones para la elección de sillas vacías:
- 1- Crear un array con el nº de sillas correspondiente y tener booleanos que indicasen si habíamos sentado a alguien ahí y si eran sillas o sofás.
- 2- Usar las boundingboxes, de forma que una silla vacía la detectase como silla, y una silla ocupada la detectaría como persona.
+ - 1. Crear un array con el nº de sillas correspondiente y tener booleanos que indicasen si habíamos sentado a alguien ahí y si eran sillas o sofás.
+ - 2. Usar las boundingboxes, de forma que una silla vacía la detectase como silla, y una silla ocupada la detectaría como persona.
  Tras pensar alternativas para poder terminar este programa decidimos simplemente ordenar que se sentaran en una silla o sofá, dependiendo de la edad.
  
 ### Relación entre plan y ejecución
