@@ -59,7 +59,7 @@ La idea principal era utilizar el programa de navegación base que ya intentamos
 ### 2.2 ¿Cómo tuvimos que modificarlo?
 
 Para esta prueba se nos ocurrió un BT muy sencillo implementando la navegación de punto a punto, por lo que aún teniendo poco tiempo no tuvimos muchos problemas en la creación de los nodos. Al tener que rehacer el habla se nos ocurrió hacerlo por nodos, de esta forma solo escuchaba cuando tenía que hacerlo.
-En resumen, el robot debía ir punto a punto mirando a ver si detectaba una persona, si lo hacía le tendría que hacer una serie de preguntas y guardar todas estas respuestas para posteriormente ir a la posición del árbitro y decirle estos datos recogidos. Este proceso solo tenía que repetirse tres veces.
+En resumen, el robot debía ir punto a punto mirando a ver si detectaba una persona, si lo hacía le tendría que preguntar su nombre, detectar el color de su camiseta con u n filtro de color y el objeto que sujetaba y guardar todas estas respuestas para posteriormente ir a la posición del árbitro y decirle estos datos recogidos. Este proceso solo tenía que repetirse tres veces.
 
 ### 2.3 Relación entre plan y ejecución
 
