@@ -10,14 +10,17 @@ David Duro Aragonés <br />
 ## 0. Índice
    - 0.0 ¿Qué pruebas elegimos y por qué?
    - 1. Prueba 1
+      - 1.0 Explicación de código  
       - 1.1 ¿Cuál fue nuestra idea principal?
       - 1.2 ¿Cómo tuvimos que modificarlo?
       - 1.3 Relación entre plan y ejecución
    - 2. Prueba 2
+      - 2.0 Explicación de código  
       - 2.1 ¿Cuál fue nuestra idea principal?
       - 2.2 ¿Cómo tuvimos que modificarlo?
       - 2.3 Relación entre plan y ejecución
    - 3. Prueba 3
+      - 3.0 Explicación de código  
       - 3.1 ¿Cuál fue nuestra idea principal?
       - 3.2 ¿Cómo tuvimos que modificarlo?
       - 3.3 Relación entre plan y ejecución
@@ -28,6 +31,10 @@ David Duro Aragonés <br />
 Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras pruebas pensamos y decidimos que las más sencillas serían la 1ª y la 2ª, ya que creando un buen programa base de navegación tendríamos todo casi hecho.
 
 ## 1. Prueba 1
+
+## 1.0 Explicación de código
+
+Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro usando tfs, de forma que con puntos previamente apuntados, se crea una tf del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y respondiendo el color de la maleta.
 
 ### 1.1 ¿Cuál fue nuestra idea principal?
 
@@ -52,6 +59,10 @@ En su ejecución el robot fue a la posición del arbitro y ahí terminó su ejec
 
 ## 2. Prueba 2
 
+### 2.0 Explicación de código
+
+El robot espera la orden de start para comenzar, después, va yendo a cada posición mandada para buscar personas, si las encuentra deberá preguntarles el nombre, detectar por boundingboxes qué objeto portan y además detectar mediante un filtro de color, detectar el color de su ropa. Tras guardar estos datos el robot debe ir a la posición del árbitro y decirle los datos recogidos.
+
 ### 2.1 ¿Cuál fue nuestra idea principal?
 
 La idea principal era utilizar el programa de navegación base que ya intentamos implementar en la 1ª prueba, pero no fue posible. Teníamos pensado ir buscando punto por punto y crear un servicio para el habla y escucha del robot, lo cuál también se nos complicó.
@@ -67,6 +78,10 @@ Esta prueba nos funcionaba perfectamente, pero la navegación nunca es perfecta 
 Finalmente, el robot entró en una zona negra de su mapa, por lo que la navegación murió y siguió con el programa principal, haciendo preguntas y guardando las respuestas.
 
 ## 3. Prueba 3
+
+### 3.0 Explicación de código
+
+El robot debe esperar la orden de start para comenzar, tras recibirla, irá a por el primer invitado, preguntándole su nombre y bebida favorita, después le dará una respuesta apropiada y le guiará hasta la zona de sillas, allí, le preguntará la edad, después buscará un asiento vacío por medio de boundingboxes y le ordenará sentarse, repitiendo el proceso hasta tres veces.
 
 ### 3.1 ¿Cuál fue nuestra idea principal?
 
