@@ -32,6 +32,7 @@ Al comenzar a planear el funcionamiento del kobuki en cada una de nuestras prueb
 
 ## 1. Prueba 1
 
+![Carry my luggage BT](https://user-images.githubusercontent.com/90764439/167626045-eca06e1c-5ec1-4d95-b531-305f9fb84226.png)
 ## 1.0 Explicación de código
 
 Primero se espera la orden de start, después, el robot debe navegar hasta el árbitro, de forma que con puntos previamente apuntados, se crea una ruta del robot al punto, al usar navegación en un entorno mapeado el robot va creando un mapa local con el cuál es capaz de esquivar los objetos. Al llegar a la posición indicada el robot deberá elegir qué maleta es la correcta por medio del diálogo, escuchando y orientandose hacia la maleta correspondiente. Posteriormente debía seguir al árbitro mediante navegación a través de TF's publicadas en la posicion del árbitro estableciendo de esta forma un camino desde el robot hasta la persona.
@@ -58,6 +59,7 @@ Tras muchas horas de trabajo no pudimos completar la navegación por entornos de
 En su ejecución el robot únicamente fue a la posición del arbitro.
 
 ## 2. Prueba 2
+![Find My Mates BT](https://user-images.githubusercontent.com/90764439/167626112-21dcb8b3-6979-4942-9f2e-0e98babb363f.png)
 
 ### 2.0 Explicación de código
 
@@ -80,6 +82,7 @@ Sin contar el error recurrente en la navegación, recibía bien los datos de las
 Finalmente, durante la ejecución un problema con la navegación hizo que el robot dejara de moverse, pero este siguió con el programa principal, haciendo preguntas y guardando las respuestas.
 
 ## 3. Prueba 3
+![Recepcionist BT](https://user-images.githubusercontent.com/90764439/167626141-4266faec-8c6b-4725-a582-be29ea6c66dd.png)
 
 ### 3.0 Explicación de código
 
